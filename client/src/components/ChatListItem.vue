@@ -28,31 +28,47 @@
 </template>
  
 <script>
+import { ref } from "@vue/reactivity";
 import ChatModal from "./ChatModal.vue";
 export default {
-  data() {
+  components: { ChatModal },
+  setup() {
+    const dialogVisible = ref(false);
+
+    const handleCloseModal = (value) => {
+      dialogVisible.value = value;
+    };
+
+    const handleClickProductItem = (productId) => {
+      dialogVisible.value = true;
+      console.log(productId);
+    };
     return {
-      dialogVisible: false,
+      dialogVisible,
+      handleCloseModal,
+      handleClickProductItem,
     };
   },
-  components: { ChatModal },
-  methods: {
-    handleCloseModal(value) {
-      this.dialogVisible = value;
-    },
-    handleClickProductItem(number) {
-      this.dialogVisible = true;
-      console.log(this, number);
-    },
-  },
+
+  // data() {
+  //   return {
+  //     dialogVisible: false,
+  //   };
+  // },
+  // methods: {
+  //   handleCloseModal(value) {
+  //     this.dialogVisible = value;
+  //   },
+  //   handleClickProductItem(number) {
+  //     this.dialogVisible = true;
+  //     console.log(this, number);
+  //   },
+  // },
 };
 </script> 
 
 
 <style scoped>
-.el-card {
-}
-
 .product-container {
   padding: 15px 0;
   text-align: center;
