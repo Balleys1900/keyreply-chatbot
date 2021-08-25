@@ -1,6 +1,6 @@
 const tokenRouter = require('./token');
 function route(app){
-    app.use('/token',tokenRouter);
+    app.use('/api/token',tokenRouter);
 }
 
 module.exports = route;
