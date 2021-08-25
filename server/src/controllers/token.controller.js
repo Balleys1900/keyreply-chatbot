@@ -30,6 +30,11 @@ class TokenController{
                         let contentNext;
                         let nextNode;
 
+                        if(!currentNode.event){
+                            contentNext = chatbot.content['conversation_start'];
+                            return res.status(200).json({data: contentNext});
+                        }
+
                         if(currentNode.event === 'capture'){
                             nextNode = currentNode.data.next.data;
                             contentNext = chatbot.content[nextNode];
