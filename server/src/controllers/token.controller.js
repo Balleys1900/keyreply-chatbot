@@ -1,9 +1,9 @@
 const Token = require('../models/token');
 const shortId = require('shortid');
 const chatbot = require('../data/chatbot.json');
-const items = require('../data/item.json');
 
 class TokenController{
+
     creteSession(req,res,next){
         const client = {
             client_id : shortId.generate(),
@@ -19,7 +19,7 @@ class TokenController{
     }
 
     dashboard(req,res){
-        res.send("dashboard");
+        return res.status(200).json({status: 'success'});
     }
 
     getNode(req,res,next){
@@ -27,19 +27,28 @@ class TokenController{
             .then((user) => {
                     if(user){
                         const currentNode = req.body.currentNode;
-                        let content;
-                        if(currentNode === 'list_items'){
-                            content = items.content[currentNode];
-                        } else {
-                            content = chatbot.content[currentNode];
-                            // res.send(content);
+                        let contentNext;
+                        let nextNode;
+
+                        if(currentNode.event === 'capture'){
+                            nextNode = currentNode.data.next.data;
+                            contentNext = chatbot.content[nextNode];
+                            if(contentNext.condition.property === currentNode.data.key
+                                && contentNext.condition.value === currentNode.data.value){
+                                return res.status(200).json({data: contentNext});
+                            }
+                            return res.status(404).json({msg:'error condition'});
                         }
-                        // res.send(content);
-                        res.status(200).json({data: content});
+
+                        if(currentNode.event === 'goto'){
+                            nextNode = currentNode.data;
+                            contentNext = chatbot.content[nextNode];
+                            return res.status(200).json({data: contentNext});
+                        }
                     }
-                    res.statusCode = 404;
+                return res.status(404).json({msg:'not found user'});
                 }
-         )
+            )
             .catch(next)
     }
 }
