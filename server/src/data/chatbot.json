@@ -150,6 +150,7 @@
 			"id": "show_item:3"
 		},
 
+
 		"buy_item:fail": {
 			"text": "Mua hàng thất bại",
 			"sub-text": "stock||priceless",
