@@ -3,6 +3,7 @@ const app = express();
 const port = 8000;
 const route = require('./routes');
 const session = require('express-session');
+<<<<<<< HEAD
 const MonggoDBSession = require('connect-mongodb-session')(session);
 const cors = require('cors');
 // const sessionMiddleware = require('./middlewares/session.middleware');
@@ -25,6 +26,14 @@ app.use(
 	}),
 );
 
+=======
+const cors = require('cors')
+const db = require('./config/db')
+
+db.connect();
+app.use(express.json());
+app.use(cors());
+>>>>>>> be5129424406fe64c0f8b284d687280d7fad1a51
 route(app);
 
 app.listen(port, () => {
