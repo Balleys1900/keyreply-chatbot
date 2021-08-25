@@ -1,16 +1,26 @@
 <template>
   <div
     class="chat-block"
-    :class="{ bot: isBot, user: !isBot, showItem: isShowItems }"
+    :class="{
+      bot: nodeInfo.isBotReply,
+      user: !nodeInfo.isBotReply,
+      showItem: isShowItems,
+    }"
   >
     <div class="chat-container">
-      <p class="chat-text">Content</p>
+      <p class="chat-text">{{ nodeInfo.text }}</p>
 
-      <ChatListItem v-if="isShowItems" />
+      <ChatListItem v-if="nodeInfo.isShowItems" />
 
-      <el-row v-if="isBot">
+      <el-row v-if="nodeInfo.isBotReply">
         <el-col :span="24" class="">
-          <el-button type="primary" class="chat-button">Button</el-button>
+          <el-button
+            v-for="button in nodeInfo.buttons"
+            :key="button.id"
+            type="primary"
+            class="chat-button"
+            >{{ button.text }}</el-button
+          >
         </el-col>
       </el-row>
     </div>
@@ -24,11 +34,7 @@ export default {
     ChatListItem,
   },
   props: {
-    isBot: { type: Boolean, default: true },
-    isShowItems: { type: Boolean, default: false },
-  },
-  setup(props) {
-    console.log(props);
+    nodeInfo: { type: Object, default: () => null, required: true },
   },
 };
 </script>
@@ -41,7 +47,7 @@ export default {
 .chat-block .chat-container {
   padding: 20px;
   margin-bottom: 20px;
-  max-width: 70%;
+  max-width: 90%;
   border-radius: 5px;
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
   text-align: center;
@@ -67,10 +73,11 @@ export default {
   margin-left: auto;
 }
 
-.chat-button {
-  display: block;
+.chat-button.chat-button {
+  /* display: block; */
   width: 100%;
   margin: 5px 0;
   text-transform: uppercase;
+  margin-left: 0;
 }
 </style>

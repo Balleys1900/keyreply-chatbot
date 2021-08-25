@@ -1,9 +1,13 @@
 export default {
-	number(state) {
-		return state.x;
+	currUser(state) {
+		return state.currUser;
 	},
 
 	isFullscreenLoading(state) {
 		return state.fullscreenLoading;
+	},
+
+	chatArr(state) {
+		return state.chatArr;
 	},
 };

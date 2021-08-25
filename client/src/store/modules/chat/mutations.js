@@ -1,9 +1,9 @@
 export default {
-	INCREMENT(state, payload) {
-		state.x += payload;
+	REGISTER(state, payload) {
+		state.currUser = payload;
 	},
 
-	FETCH(state, payload) {
-		state.post = payload;
+	PUSH_CHAT_ARR(state, payload) {
+		state.chatArr.push(payload);
 	},
 };

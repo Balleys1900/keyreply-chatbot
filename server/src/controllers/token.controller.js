@@ -51,6 +51,7 @@ class TokenController{
             )
             .catch(next)
     }
+
 }
 
-module.exports = new TokenController;
+module.exports = new TokenController();

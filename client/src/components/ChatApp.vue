@@ -8,8 +8,15 @@
         <span class="chat-title">TALK TO US</span>
       </div>
     </template>
-    <ChatBlock v-if="isLogin" :isShowItems="true" />
-    <ChatForm v-else />
+    <ChatForm v-if="!currUser" />
+    <div v-else>
+      <ChatBlock
+        v-for="nodeInfo in chatArr"
+        :nodeInfo="nodeInfo"
+        :key="nodeInfo.id"
+        :isShowItems="true"
+      />
+    </div>
   </el-card>
 </template>
 
@@ -17,12 +24,21 @@
 import { ChatRound } from "@element-plus/icons";
 import ChatBlock from "./ChatBlock.vue";
 import ChatForm from "./ChatForm.vue";
+import { useStore } from "vuex";
+import { computed } from "@vue/reactivity";
 
 export default {
   components: { ChatBlock, ChatRound, ChatForm },
   setup() {
+    const store = useStore();
+
+    const currUser = computed(() => store.getters["chat/currUser"]);
+
+    const chatArr = computed(() => store.getters["chat/chatArr"]);
+
     return {
-      isLogin: true,
+      currUser,
+      chatArr,
     };
   },
 };
