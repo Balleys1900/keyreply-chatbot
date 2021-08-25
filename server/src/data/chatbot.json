@@ -1,199 +1,206 @@
 {
-  "content": {
-    "conversation_start": {
-      "text": "Nhập tên người dùng",
-      "buttons": [
-        {
-          "text": "Bắt đầu chat",
-          "event": "capture",
-          "data": {
-            "key": "username",
-            "value": "abc",
-            "next": "conversation_welcome"
-          }
-        }
-      ],
-      "id": "conversation_start"
-    },
-    "conversation_welcome": {
-      "text": "Chào mừng bạn đến với cửa hàng ABC",
-      "buttons": [
-        {
-          "text": "Xem danh sách sản phẩm",
-          "event": "goto",
-          "data": "list_items"
-        },
-        {
-          "text": "Kết thúc mua sắm",
-          "event": "goto",
-          "data": "list_items"
-        }
-      ],
-      "id": "conversation_welcome"
-    },
+	"content": {
+		"conversation_start": {
+			"text": "Nhập tên người dùng",
+			"buttons": [
+				{
+					"text": "Bắt đầu chat",
+					"event": "capture",
+					"data": {
+						"key": "username",
+						"value": "abc",
+						"next": "conversation_welcome"
+					}
+				}
+			],
+			"id": "conversation_start"
+		},
+		"conversation_welcome": {
+			"text": "Chào mừng bạn đến với cửa hàng ABC",
+			"buttons": [
+				{
+					"text": "Xem danh sách sản phẩm",
+					"event": "goto",
+					"data": "list_items"
+				},
+				{
+					"text": "Kết thúc mua sắm",
+					"event": "goto",
+					"data": "conversation_end"
+				}
+			],
+			"id": "conversation_welcome"
+		},
 
-    "list_items": {
-      "text": "Danh sách sản phẩm",
-      "buttons": [
-        {
-          "text": "Bàn",
-          "event": "capture",
-          "data": {
-            "key": "item_select",
-            "value": "1",
-            "next": {
-              "event": "goto",
-              "data": "show_item:1"
-            }
-          }
-        },
-        {
-          "text": "Ghế",
-          "event": "capture",
-          "data": {
-            "key": "item_select",
-            "value": "2",
-            "next": {
-              "event": "goto",
-              "data": "show_item:2"
-            }
-          }
-        },
-        {
-          "text": "Nệm",
-          "event": "capture",
-          "data": {
-            "key": "item_select",
-            "value": "3",
-            "next": {
-              "event": "goto",
-              "data": "show_item:3"
-            }
-          }
-        }
-      ]
-    },
-    "show_item:1": {
-      "text": "Cái bàn ( 100,000đ )",
-      "price": 100,
-      "sub_text": "Chi tiết sản phẩm",
-      "buttons": [
-        {
-          "text": "Mua sản phẩm",
-          "event": "goto",
-          "data": "buy_item:success"
-        },
-        {
-          "text": "Xem danh sách sản phẩm",
-          "event": "goto",
-          "data": "list_items"
-        }
-      ],
-      "condition": {
-        "property": "item_select",
-        "value": "1",
-        "operator": "="
-      },
-      "id": "show_item:1"
-    },
-    "show_item:2": {
-      "text": "Cái ghế (200,000đ)",
-      "price": 200,
-      "sub_text": "Chi tiết sản phẩm",
-      "buttons": [
-        {
-          "text": "Mua sản phẩm",
-          "event": "goto",
-          "data": "buy_item:success"
-        },
-        {
-          "text": "Xem danh sách sản phẩm",
-          "event": "goto",
-          "data": "list_items"
-        }
-      ],
-      "condition": {
-        "property": "item_select",
-        "value": "2",
-        "operator": "="
-      },
-      "id": "show_item:2"
-    },
-    "show_item:3": {
-      "text": "Cái nệm ( 300,000đ )",
-      "price": 300,
-      "sub_text": "Chi tiết sản phẩm",
-      "buttons": [
-        {
-          "text": "Mua sản phẩm",
-          "event": "goto",
-          "data": "buy_item:success"
-        },
-        {
-          "text": "Xem danh sách sản phẩm",
-          "event": "goto",
-          "data": "list_items"
-        }
-      ],
-      "condition": {
-        "property": "item_select",
-        "value": "3",
-        "operator": "="
-      },
-      "id": "show_item:3"
-    },
+		"list_items": {
+			"id": "list_items",
+			"text": "Danh sách sản phẩm",
+			"buttons": [
+				{
+					"text": "Bàn",
+					"thumb": "https://www.ikea.com/cz/en/images/products/ekedalen-extendable-table-dark-brown__0736963_pe740827_s5.jpg",
+					"event": "capture",
+					"data": {
+						"key": "item_select",
+						"value": "1",
+						"next": {
+							"event": "goto",
+							"data": "show_item:1"
+						}
+					}
+				},
+				{
+					"text": "Ghế",
+					"thumb": "https://www.ikea.com/mx/en/images/products/stefan-chair-brown-black__0727320_pe735593_s5.jpg?f=s",
+					"event": "capture",
+					"data": {
+						"key": "item_select",
+						"value": "2",
+						"next": {
+							"event": "goto",
+							"data": "show_item:2"
+						}
+					}
+				},
+				{
+					"text": "Nệm",
+					"thumb": "https://www.ikea.com/mx/en/images/products/malm-bed-frame-high-black-brown-luroey__0638608_pe699032_s5.jpg",
+					"event": "capture",
+					"data": {
+						"key": "item_select",
+						"value": "3",
+						"next": {
+							"event": "goto",
+							"data": "show_item:3"
+						}
+					}
+				}
+			]
+		},
+		"show_item:1": {
+			"text": "Cái bàn làm việc cực đã",
+			"thumb": "https://www.ikea.com/cz/en/images/products/ekedalen-extendable-table-dark-brown__0736963_pe740827_s5.jpg",
+			"price": 999,
+			"sub_text": "Chi tiết sản phẩm",
+			"buttons": [
+				{
+					"text": "Mua sản phẩm",
+					"event": "goto",
+					"data": "buy_item:success"
+				},
+				{
+					"text": "Xem danh sách sản phẩm",
+					"event": "goto",
+					"data": "list_items"
+				}
+			],
+			"condition": {
+				"property": "item_select",
+				"value": "1",
+				"operator": "="
+			},
+			"id": "show_item:1"
+		},
+		"show_item:2": {
+			"text": "Cái ghế ngồi siêu êm",
+			"thumb": "https://www.ikea.com/mx/en/images/products/stefan-chair-brown-black__0727320_pe735593_s5.jpg?f=s",
+			"price": 10000,
+			"sub_text": "Chi tiết sản phẩm",
+			"buttons": [
+				{
+					"text": "Mua sản phẩm",
+					"event": "goto",
+					"data": "buy_item:success"
+				},
+				{
+					"text": "Xem danh sách sản phẩm",
+					"event": "goto",
+					"data": "list_items"
+				}
+			],
+			"condition": {
+				"property": "item_select",
+				"value": "2",
+				"operator": "="
+			},
+			"id": "show_item:2"
+		},
+		"show_item:3": {
+			"text": "Cái nệm đỉnh của chóp",
+			"thumb": "https://www.ikea.com/mx/en/images/products/malm-bed-frame-high-black-brown-luroey__0638608_pe699032_s5.jpg",
+			"price": 300,
+			"sub_text": "Chi tiết sản phẩm",
+			"buttons": [
+				{
+					"text": "Mua sản phẩm",
+					"event": "goto",
+					"data": "buy_item:success"
+				},
+				{
+					"text": "Xem danh sách sản phẩm",
+					"event": "goto",
+					"data": "list_items"
+				}
+			],
+			"condition": {
+				"property": "item_select",
+				"value": "3",
+				"operator": "="
+			},
+			"id": "show_item:3"
+		},
 
-    "buy_item:fail": {
-      "text": "Mua hàng thất bại",
-      "sub-text": "stock||priceless",
-      "buttons": [
-        {
-          "text": "Xem sản phẩm khác",
-          "event": "goto",
-          "data": "list_items"
-        },
-        {
-          "text": "Kết thúc cuộc trò chuyện",
-          "event": "goto",
-          "data": "conversation_end"
-        }
-      ],
-      "condition": [],
-      "id": "buy_item:fail"
-    },
+		"buy_item:fail": {
+			"text": "Mua hàng thất bại",
+			"sub-text": "stock||priceless",
+			"buttons": [
+				{
+					"text": "Xem sản phẩm khác",
+					"event": "goto",
+					"data": "list_items"
+				},
+				{
+					"text": "Kết thúc cuộc trò chuyện",
+					"event": "goto",
+					"data": "conversation_end"
+				}
+			],
+			"condition": [],
+			"id": "buy_item:fail"
+		},
 
-    "buy_item:success": {
-      "text": "Mua hàng thành công",
-      "buttons": [
-        {
-          "text": "Xem sản phẩm khác",
-          "event": "goto",
-          "data": "list_items"
-        },
-        {
-          "text": "Kết thúc cuộc trò chuyện",
-          "event": "goto",
-          "data": "conversation_end"
-        }
-      ],
-      "condition": [
-        {
-          "property": "accessToken",
-          "value": "ID_accessTOKEN",
-          "operator": "="
-        },
-        {
-          "property": "item_select",
-          "value": "item_select:id",
-          "operator": "="
-        }
-      ],
-      "id": "buy_item:success"
-    },
-    "conversation_end": {
-      "text": "Xin chào và hẹn gặp lại quý khách",
-      "buttons": [],
-      "id": "conversation_end"
-    }
-  }
+		"buy_item:success": {
+			"text": "Mua hàng thành công",
+			"buttons": [
+				{
+					"text": "Xem sản phẩm khác",
+					"event": "goto",
+					"data": "list_items"
+				},
+				{
+					"text": "Kết thúc cuộc trò chuyện",
+					"event": "goto",
+					"data": "conversation_end"
+				}
+			],
+			"condition": [
+				{
+					"property": "accessToken",
+					"value": "ID_accessTOKEN",
+					"operator": "="
+				},
+				{
+					"property": "item_select",
+					"value": "item_select:id",
+					"operator": "="
+				}
+			],
+			"id": "buy_item:success"
+		},
+		"conversation_end": {
+			"text": "Xin chào và hẹn gặp lại quý khách",
+			"buttons": [],
+			"id": "conversation_end"
+		}
+	}
 }
