@@ -8,9 +8,18 @@ export default {
 				name: payload,
 			};
 			const res = await service.post('token/webchat_new_session', data);
-			console.log(res);
 			if (res.status === 200) {
 				commit('REGISTER', res.data);
+
+				const {
+					data: { data },
+				} = await service.post('token/webchat', {
+					...res.data,
+					currentNode: 'conversation_welcome',
+				});
+
+				commit('PUSH_CHAT_ARR', { ...data, isBotReply: true, isShowItems: false });
+
 				ElMessage({
 					message: 'Successfully registered',
 					type: 'success',
