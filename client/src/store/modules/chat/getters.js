@@ -6,4 +6,8 @@ export default {
 	isFullscreenLoading(state) {
 		return state.fullscreenLoading;
 	},
+
+	chatArr(state) {
+		return state.chatArr;
+	},
 };

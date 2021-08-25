@@ -8,8 +8,15 @@
         <span class="chat-title">TALK TO US</span>
       </div>
     </template>
-    <ChatBlock v-if="currUser !== null" :isShowItems="true" />
-    <ChatForm v-else />
+    <ChatForm v-if="!currUser" />
+    <div v-else>
+      <ChatBlock
+        v-for="nodeInfo in chatArr"
+        :nodeInfo="nodeInfo"
+        :key="nodeInfo.id"
+        :isShowItems="true"
+      />
+    </div>
   </el-card>
 </template>
 
@@ -27,8 +34,11 @@ export default {
 
     const currUser = computed(() => store.getters["chat/currUser"]);
 
+    const chatArr = computed(() => store.getters["chat/chatArr"]);
+
     return {
       currUser,
+      chatArr,
     };
   },
 };

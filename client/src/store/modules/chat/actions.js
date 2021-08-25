@@ -11,12 +11,14 @@ export default {
 			if (res.status === 200) {
 				commit('REGISTER', res.data);
 
-				const chatNode = await service.post('token/webchat', {
+				const {
+					data: { data },
+				} = await service.post('token/webchat', {
 					...res.data,
-					currentNode: 'list_items',
+					currentNode: 'conversation_welcome',
 				});
 
-				commit('PUSH_CHAT_ARR', chatNode);
+				commit('PUSH_CHAT_ARR', { ...data, isBotReply: true, isShowItems: false });
 
 				ElMessage({
 					message: 'Successfully registered',
