@@ -4,7 +4,7 @@
     :class="{
       bot: nodeInfo.isBotReply,
       user: !nodeInfo.isBotReply,
-      showItem: isShowItems,
+      showItem: nodeInfo.isShowItems,
     }"
   >
     <div class="chat-container">
@@ -19,6 +19,7 @@
             :key="button.id"
             type="primary"
             class="chat-button"
+            @click="getNextNode({ ...currUser, currentNode: { ...button } })"
             >{{ button.text }}</el-button
           >
         </el-col>
@@ -26,8 +27,9 @@
     </div>
   </div>
 </template>
-
+``
 <script>
+import { useStore } from "vuex";
 import ChatListItem from "./ChatListItem.vue";
 export default {
   components: {
@@ -35,6 +37,16 @@ export default {
   },
   props: {
     nodeInfo: { type: Object, default: () => null, required: true },
+    currUser: { type: Object, default: () => null, required: true },
+  },
+  setup() {
+    const store = useStore();
+
+    const getNextNode = (payload) => store.dispatch("chat/getNewNode", payload);
+
+    return {
+      getNextNode,
+    };
   },
 };
 </script>

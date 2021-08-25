@@ -12,7 +12,7 @@ export function register(data) {
 // Get Chat Node
 export function getNode(data) {
 	return request({
-		url: 'token/webchat',
+		url: 'v1/chatbot',
 		method: 'POST',
 		data,
 	});
