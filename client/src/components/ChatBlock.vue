@@ -19,7 +19,7 @@
             :key="button.id"
             type="primary"
             class="chat-button"
-            @click="getNextNode({ ...currUser, currentNode: { ...button } })"
+            @click="getNextNode({ currentNode: { ...button } })"
             >{{ button.text }}</el-button
           >
         </el-col>
@@ -37,7 +37,6 @@ export default {
   },
   props: {
     nodeInfo: { type: Object, default: () => null, required: true },
-    currUser: { type: Object, default: () => null, required: true },
   },
   setup() {
     const store = useStore();

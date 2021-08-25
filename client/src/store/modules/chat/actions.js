@@ -29,8 +29,8 @@ export default {
 
 	async getNewNode({ commit }, payload) {
 		try {
-			console.log(payload);
 			const res = await getNode(payload);
+			console.log(res);
 			if (res.status === 200) {
 				const {
 					data: { data },
