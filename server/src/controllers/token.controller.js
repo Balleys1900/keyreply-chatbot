@@ -22,17 +22,15 @@ class TokenController {
 	}
 
 	getNode(req, res, next) {
-		Token.findOne({ client_id: req.body.client_id, sessionId: req.body.sessionid })
+		Token.findOne({
+			client_id: req.body.client_id,
+			sessionId: req.body.sessionid,
+		})
 			.then((user) => {
 				if (user) {
 					const currentNode = req.body.currentNode;
 					let contentNext;
 					let nextNode;
-
-					if (!currentNode.event) {
-						contentNext = chatbot.content['conversation_welcome'];
-						return res.status(200).json({ data: contentNext });
-					}
 
 					if (currentNode.event === 'capture') {
 						nextNode = currentNode.data.next.data;
