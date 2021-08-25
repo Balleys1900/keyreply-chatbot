@@ -1,114 +1,115 @@
 {
-  "content": {
-    "list_items": {
-      "text": "Danh sách sản phẩm",
-      "buttons": [
-        {
-          "text": "Bàn",
-          "event": "capture",
-          "data": {
-            "key": "item_select",
-            "value": "1",
-            "next": {
-              "event": "goto",
-              "data": "show_item:1"
-            }
-          }
-        },
-        {
-          "text": "Ghế",
-          "event": "capture",
-          "data": {
-            "key": "item_select",
-            "value": "2",
-            "next": {
-              "event": "goto",
-              "data": "show_item:2"
-            }
-          }
-        },
-        {
-          "text": "Nệm",
-          "event": "capture",
-          "data": {
-            "key": "item_select",
-            "value": "3",
-            "next": {
-              "event": "goto",
-              "data": "show_item:3"
-            }
-          }
-        }
-      ]
-    },
-    "show_item:1": {
-      "text": "Cái bàn ( 100,000đ )",
-      "price": 100,
-      "sub_text": "Chi tiết sản phẩm",
-      "buttons": [
-        {
-          "text": "Mua sản phẩm",
-          "event": "goto",
-          "data": "buy_item"
-        },
-        {
-          "text": "Xem danh sách sản phẩm",
-          "event": "goto",
-          "data": "list_items"
-        }
-      ],
-      "condition": {
-        "property": "item_select",
-        "value": "1",
-        "operator": "="
-      },
-      "id": "show_item:1"
-    },
-    "show_item:2": {
-      "text": "Cái ghế (200,000đ)",
-      "price": 200,
-      "sub_text": "Chi tiết sản phẩm",
-      "buttons": [
-        {
-          "text": "Mua sản phẩm",
-          "event": "goto",
-          "data": "buy_item"
-        },
-        {
-          "text": "Xem danh sách sản phẩm",
-          "event": "goto",
-          "data": "list_items"
-        }
-      ],
-      "condition": {
-        "property": "item_select",
-        "value": "2",
-        "operator": "="
-      },
-      "id": "show_item:2"
-    },
-    "show_item:3": {
-      "text": "Cái nệm ( 300,000đ )",
-      "price": 300,
-      "sub_text": "Chi tiết sản phẩm",
-      "buttons": [
-        {
-          "text": "Mua sản phẩm",
-          "event": "goto",
-          "data": "buy_item"
-        },
-        {
-          "text": "Xem danh sách sản phẩm",
-          "event": "goto",
-          "data": "list_items"
-        }
-      ],
-      "condition": {
-        "property": "item_select",
-        "value": "3",
-        "operator": "="
-      },
-      "id": "show_item:3"
-    }
-  }
+	"content": {
+		"list_items": {
+			"id": "list_items",
+			"text": "Danh sách sản phẩm",
+			"buttons": [
+				{
+					"text": "Bàn",
+					"event": "capture",
+					"data": {
+						"key": "item_select",
+						"value": "1",
+						"next": {
+							"event": "goto",
+							"data": "show_item:1"
+						}
+					}
+				},
+				{
+					"text": "Ghế",
+					"event": "capture",
+					"data": {
+						"key": "item_select",
+						"value": "2",
+						"next": {
+							"event": "goto",
+							"data": "show_item:2"
+						}
+					}
+				},
+				{
+					"text": "Nệm",
+					"event": "capture",
+					"data": {
+						"key": "item_select",
+						"value": "3",
+						"next": {
+							"event": "goto",
+							"data": "show_item:3"
+						}
+					}
+				}
+			]
+		},
+		"show_item:1": {
+			"text": "Cái bàn ( 100,000đ )",
+			"price": 100,
+			"sub_text": "Chi tiết sản phẩm",
+			"buttons": [
+				{
+					"text": "Mua sản phẩm",
+					"event": "goto",
+					"data": "buy_item"
+				},
+				{
+					"text": "Xem danh sách sản phẩm",
+					"event": "goto",
+					"data": "list_items"
+				}
+			],
+			"condition": {
+				"property": "item_select",
+				"value": "1",
+				"operator": "="
+			},
+			"id": "show_item:1"
+		},
+		"show_item:2": {
+			"text": "Cái ghế (200,000đ)",
+			"price": 200,
+			"sub_text": "Chi tiết sản phẩm",
+			"buttons": [
+				{
+					"text": "Mua sản phẩm",
+					"event": "goto",
+					"data": "buy_item"
+				},
+				{
+					"text": "Xem danh sách sản phẩm",
+					"event": "goto",
+					"data": "list_items"
+				}
+			],
+			"condition": {
+				"property": "item_select",
+				"value": "2",
+				"operator": "="
+			},
+			"id": "show_item:2"
+		},
+		"show_item:3": {
+			"text": "Cái nệm ( 300,000đ )",
+			"price": 300,
+			"sub_text": "Chi tiết sản phẩm",
+			"buttons": [
+				{
+					"text": "Mua sản phẩm",
+					"event": "goto",
+					"data": "buy_item"
+				},
+				{
+					"text": "Xem danh sách sản phẩm",
+					"event": "goto",
+					"data": "list_items"
+				}
+			],
+			"condition": {
+				"property": "item_select",
+				"value": "3",
+				"operator": "="
+			},
+			"id": "show_item:3"
+		}
+	}
 }
