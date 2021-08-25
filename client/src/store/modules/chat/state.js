@@ -1,5 +1,6 @@
 export default {
-	x: 1,
-	post: [],
-	fullscreenLoading: false,
+	currUser: null,
+	chatArr: [],
+	masterLoading: false,
+	chatLoading: false,
 };

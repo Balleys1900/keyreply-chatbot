@@ -1,32 +1,26 @@
-import { getData } from '../../../api/auth';
+import service from '@/utils/request';
+import { ElMessage } from 'element-plus';
 
 export default {
-	handleIncrementNumber({ commit }, payload) {
-		commit('chat/INCREMENT', payload, { root: true });
-
-		// dispatch('handleFn')
-	},
-
-	async handleGetData({ commit }) {
-		// return new Promise((resolve, reject) => {
-		// 	return getData()
-		// 		.then((data) => {
-		// 			commit('chat/FETCH', data, { root: true });
-		// 			resolve(data);
-		// 		})
-		// 		.catch((err) => {
-		// 			reject(err);
-		// 		});
-		// });
-
+	async register({ commit }, payload) {
 		try {
-			const res = await getData();
-			commit('chat/FETCH', res, { root: true });
-			return res;
+			const data = {
+				name: payload,
+			};
+			const res = await service.post('token/webchat_new_session', data);
+			console.log(res);
+			if (res.status === 200) {
+				commit('REGISTER', res.data);
+				ElMessage({
+					message: 'Successfully registered',
+					type: 'success',
+				});
+			}
 		} catch (error) {
-			return error;
+			ElMessage({
+				message: error.message,
+				type: 'error',
+			});
 		}
 	},
-
-	// handleFn
 };

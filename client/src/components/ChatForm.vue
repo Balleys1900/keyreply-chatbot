@@ -6,10 +6,13 @@
         <el-col :span="24">
           <el-input
             placeholder="Insert your name to begin"
-            v-model="input.name"
+            v-model="username"
           ></el-input>
         </el-col>
-        <el-button type="primary" style="width: 100%; margin: 10px 0"
+        <el-button
+          @click="register"
+          type="primary"
+          style="width: 100%; margin: 10px 0"
           >Start</el-button
         >
         <el-col :span="24"> </el-col>
@@ -19,13 +22,22 @@
 </template>
 
 <script>
+import { ref } from "@vue/reactivity";
+import { useStore } from "vuex";
 export default {
   name: "chat-form",
-  data() {
+  setup() {
+    const username = ref("");
+    const store = useStore();
+
+    const register = () => store.dispatch("chat/register", username.value);
+
     return {
-      input: {
-        name: "",
-      },
+      // State
+      username,
+      register,
+      // Actions
+      // Getters
     };
   },
 };
