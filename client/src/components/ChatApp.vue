@@ -8,9 +8,9 @@
 				<span class="chat-title">TALK TO US</span>
 			</div>
 		</template>
-		<!-- <ChatForm v-if="!currUser" /> -->
-		<div>
-			<ChatBlock v-for="nodeInfo in chatArr" :nodeInfo="nodeInfo" :key="nodeInfo.id" :isShowItems="true" :currUser="currUser" />
+		<chat-form v-if="!isLogin" />
+		<div v-else>
+			<ChatBlock v-for="nodeInfo in chatArr" :nodeInfo="nodeInfo" :key="nodeInfo.id" :isShowItems="true" />
 		</div>
 	</el-card>
 </template>
@@ -21,27 +21,28 @@
 	// import ChatForm from "./ChatForm.vue";
 	import { mapGetters, useStore } from 'vuex';
 	import { computed } from '@vue/reactivity';
+	import ChatForm from './ChatForm.vue';
 
 	export default {
-		components: { ChatBlock, ChatRound },
+		components: { ChatBlock, ChatRound, ChatForm },
 		setup() {
 			const store = useStore();
 
-			const currUser = computed(() => store.getters['chat/currUser']);
+			const isLogin = computed(() => store.getters['chat/isLogin']);
 
 			const chatArr = computed(() => store.getters['chat/chatArr']);
 
 			const getNewNode = (payload) => store.dispatch('chat/getNewNode', payload);
 
 			return {
-				currUser,
+				isLogin,
 				chatArr,
 				getNewNode,
 			};
 		},
 
 		created() {
-			this.getNewNode();
+			// this.getNewNode();
 		},
 		computed: {
 			...mapGetters({
