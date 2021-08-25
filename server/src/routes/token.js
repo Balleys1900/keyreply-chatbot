@@ -9,9 +9,9 @@ const isAuth = (req,res,next) =>{
     }
 
 }
-router.get('/createSession',tokenController.creteSession);
+router.post('/webchat_new_session',tokenController.creteSession);
 router.get('/dashboard',isAuth,tokenController.dashboard);
-router.get('/getNode/:content',isAuth,tokenController.getNode);
+router.post('/webchat',isAuth,tokenController.getNode);
 
 
 module.exports = router;
