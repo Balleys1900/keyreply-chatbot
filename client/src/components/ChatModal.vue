@@ -44,7 +44,6 @@
 export default {
   props: {
     isShow: { type: Boolean, default: false, required: true },
-    productObj: { type: Object, default: () => null, required: true },
   },
   methods: {
     handleClose(done) {

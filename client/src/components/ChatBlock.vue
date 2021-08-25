@@ -27,9 +27,6 @@ export default {
     isBot: { type: Boolean, default: true },
     isShowItems: { type: Boolean, default: false },
   },
-  setup(props) {
-    console.log(props);
-  },
 };
 </script>
 

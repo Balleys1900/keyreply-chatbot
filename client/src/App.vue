@@ -8,35 +8,21 @@
 import { computed } from "@vue/reactivity";
 import { useStore } from "vuex";
 import MasterLayout from "./layouts/MasterLayout.vue";
-import { onMounted, onUnmounted, onUpdated } from "vue";
 
 export default {
   name: "App",
   components: { MasterLayout },
   setup() {
     const store = useStore();
-
-    onMounted(() => {
-      console.log("onMounted");
-    });
-
-    onUpdated(() => {
-      console.log("updated!");
-    });
-
-    onUnmounted(() => {
-      console.log("unmounted!");
-    });
-
     return {
       // Actions
-      getData: () => store.dispatch("chat/handleGetData"),
       // Getters
       isFullscreenLoading: computed(
         () => store.getters["chat/isFullscreenLoading"]
       ),
     };
   },
+  created() {},
 };
 </script>
 
