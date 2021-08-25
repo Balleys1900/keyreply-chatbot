@@ -10,8 +10,8 @@ const isAuth = (req,res,next) =>{
 
 }
 router.post('/webchat_new_session',tokenController.creteSession);
-router.get('/dashboard',isAuth,tokenController.dashboard);
-router.post('/webchat',isAuth,tokenController.getNode);
+router.get('/dashboard',tokenController.dashboard);
+router.post('/webchat',tokenController.getNode);
 
 
 module.exports = router;
