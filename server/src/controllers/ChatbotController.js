@@ -1,4 +1,3 @@
-const shortId = require("shortid");
 const chatbot = require("../data/chatbot.json");
 
 class ChatbotController {
