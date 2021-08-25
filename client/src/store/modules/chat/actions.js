@@ -1,5 +1,5 @@
-import service from '@/utils/request';
 import { ElMessage } from 'element-plus';
+import { register, getNode } from '@/api/chat';
 
 export default {
 	async register({ commit }, payload) {
@@ -7,16 +7,14 @@ export default {
 			const data = {
 				name: payload,
 			};
-			const res = await service.post('token/webchat_new_session', data);
+			const res = await register(data);
+
 			if (res.status === 200) {
 				commit('REGISTER', res.data);
 
 				const {
 					data: { data },
-				} = await service.post('token/webchat', {
-					...res.data,
-					currentNode: 'conversation_welcome',
-				});
+				} = await getNode({ ...res.data, currentNode: 'conversation_welcome' });
 
 				commit('PUSH_CHAT_ARR', { ...data, isBotReply: true, isShowItems: false });
 
