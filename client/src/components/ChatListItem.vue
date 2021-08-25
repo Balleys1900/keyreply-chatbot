@@ -34,7 +34,12 @@
 
 			const getProductInfo = async (payload) => {
 				try {
-					const res = await getNode(payload);
+					const tokenLocal = localStorage.getItem('zc');
+					const res = await getNode(payload, {
+						headers: {
+							Authorization: `Bearer ${tokenLocal}`,
+						},
+					});
 					productInfo.value = res.data.data;
 					console.log(productInfo.value);
 				} catch (error) {

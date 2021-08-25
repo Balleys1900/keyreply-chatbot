@@ -3,8 +3,12 @@ export default {
 		return state.currUser;
 	},
 
+	isLogin(state) {
+		return state.isLogin;
+	},
+
 	isFullscreenLoading(state) {
-		return state.fullscreenLoading;
+		return state.masterLoading;
 	},
 
 	chatArr(state) {

@@ -1,9 +1,14 @@
 export default {
-	REGISTER(state, payload) {
-		state.currUser = payload;
+	SET_LOGIN(state, payload) {
+		state.isLogin = payload.isLogin;
+		state.currUser = payload.currUser || null;
 	},
 
 	PUSH_CHAT_ARR(state, payload) {
 		state.chatArr.push(payload);
+	},
+
+	SET_LOADING(state, payload) {
+		state.masterLoading = payload;
 	},
 };
