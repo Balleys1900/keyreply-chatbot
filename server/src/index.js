@@ -6,6 +6,7 @@ const session = require('express-session');
 const cors = require('cors');
 const db = require('./config/db');
 
+
 db.connect();
 app.use(express.json());
 app.use(cors());
