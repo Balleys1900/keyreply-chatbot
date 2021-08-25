@@ -29,14 +29,20 @@ export default {
 
 	async getNewNode({ commit }, payload) {
 		try {
-			const res = await getNode(payload);
-			console.log(res);
+			console.log(payload?.currentNode);
+			if (payload)
+				commit('PUSH_CHAT_ARR', {
+					text: payload.text,
+					isBotReply: false,
+					isShowItems: false,
+				});
+
+			const res = await getNode({ currentNode: payload?.currentNode });
+
 			if (res.status === 200) {
 				const {
 					data: { data },
 				} = res;
-
-				console.log(data);
 
 				commit('PUSH_CHAT_ARR', { ...data, isBotReply: true, isShowItems: false });
 			}

@@ -19,7 +19,9 @@
             :key="button.id"
             type="primary"
             class="chat-button"
-            @click="getNextNode({ currentNode: { ...button } })"
+            @click="
+              getNextNode({ text: button.text, currentNode: { ...button } })
+            "
             >{{ button.text }}</el-button
           >
         </el-col>
@@ -58,7 +60,7 @@ export default {
 .chat-block .chat-container {
   padding: 20px;
   margin-bottom: 20px;
-  max-width: 90%;
+  width: fit-content;
   border-radius: 5px;
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
   text-align: center;
