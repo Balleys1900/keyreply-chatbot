@@ -4,6 +4,8 @@ const port = 8000;
 const route = require("./routes");
 const cors = require("cors");
 const db = require("./config/db");
+const dotenv = require('dotenv');
+dotenv.config();
 
 db.connect();
 app.use(express.json());
