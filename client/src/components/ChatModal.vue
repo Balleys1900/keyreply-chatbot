@@ -1,9 +1,8 @@
 <template>
 	<div>
 		<el-dialog
-			v-model="$props.isShow"
+			v-model="isShowListener"
 			title="PRODUCT DETAILS"
-			width="30%"
 			:before-close="handleClose"
 			:customClass="'product-modal'"
 			:top="'5vh'"
@@ -17,16 +16,28 @@
 						<h1 class="product-title">{{ productInfo.text }}</h1>
 						<span class="product-price">{{ productInfo.price }}$</span>
 						<span class="product-desc">
-							Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid veritatis possimus nulla! Rem ab quas laboriosam enim
-							quae mollitia. Placeat doloremque ipsa quas iusto molestiae reiciendis aliquid a earum esse?
+							Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid veritatis possimus
+							nulla! Rem ab quas laboriosam enim quae mollitia. Placeat doloremque ipsa quas iusto
+							molestiae reiciendis aliquid a earum esse?
 						</span>
 						<span class="product-desc">
-							Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid veritatis possimus nulla! Rem ab quas laboriosam enim
-							quae mollitia. Placeat doloremque ipsa quas iusto molestiae reiciendis aliquid a earum esse?
+							Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid veritatis possimus
+							nulla! Rem ab quas laboriosam enim quae mollitia. Placeat doloremque ipsa quas iusto
+							molestiae reiciendis aliquid a earum esse?
 						</span>
-						<el-button type="primary" @click="handleClick(button)" plain v-for="(button, index) in productInfo.buttons" :key="index">{{
-							button.text
-						}}</el-button>
+						<el-row :gutter="10">
+							<el-col
+								:lg="12"
+								:md="24"
+								:xs="24"
+								v-for="(button, index) in productInfo.buttons"
+								:key="index"
+							>
+								<el-button class="button-item" type="primary" @click="handleClick(button)" plain>{{
+									button.text
+								}}</el-button>
+							</el-col>
+						</el-row>
 					</div>
 				</el-col>
 			</el-row>
@@ -37,6 +48,11 @@
 <script>
 	import { mapActions, mapMutations } from 'vuex';
 	export default {
+		data() {
+			return {
+				isVisible: false,
+			};
+		},
 		props: {
 			isShow: { type: Boolean, default: false, required: true },
 			productInfo: { type: Object, required: true },
@@ -64,7 +80,7 @@
 		},
 		computed: {
 			isShowListener() {
-				return this.$props.isShow;
+				return this.isShow;
 			},
 		},
 	};
@@ -72,7 +88,8 @@
 
 <style>
 	.product-modal {
-		min-width: 70%;
+		max-width: 100vw;
+		width: 90% !important;
 		text-align: left;
 	}
 	.product-section {
@@ -119,5 +136,10 @@
 	span {
 		display: block;
 		margin: 20px 0;
+	}
+
+	.button-item {
+		width: 100%;
+		margin-bottom: 10px;
 	}
 </style>

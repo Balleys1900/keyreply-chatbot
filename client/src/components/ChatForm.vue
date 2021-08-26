@@ -1,14 +1,25 @@
 <template>
 	<div class="form-container">
-		<el-form class="form-register" :rules="rules" :model="formData" ref="myForm">
+		<el-form
+			class="form-register"
+			:rules="rules"
+			:model="formData"
+			ref="myForm"
+			@submit="submitForm('myForm')"
+		>
 			<el-row>
 				<img src="@/assets/images/welcome.png" alt="" class="form-image" />
 				<el-col :span="24">
 					<el-form-item prop="username">
-						<el-input placeholder="Insert your name to begin" v-model="formData.username"></el-input>
+						<el-input
+							placeholder="Insert your name to begin"
+							v-model="formData.username"
+						></el-input>
 					</el-form-item>
 				</el-col>
-				<el-button @click="submitForm('myForm')" type="primary" style="width: 100%; margin: 10px 0">Start</el-button>
+				<el-button @click="submitForm('myForm')" type="primary" style="width: 100%"
+					>Start</el-button
+				>
 				<el-col :span="24"> </el-col>
 			</el-row>
 		</el-form>

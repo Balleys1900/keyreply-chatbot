@@ -1,18 +1,37 @@
 <template>
-	<el-card class="box-card">
-		<template #header>
-			<div class="card-header">
-				<el-icon :size="25">
-					<chat-round />
-				</el-icon>
-				<span class="chat-title">TALK TO US</span>
-			</div>
-		</template>
-		<chat-form v-if="!isLogin" />
-		<div v-else>
-			<ChatBlock v-for="nodeInfo in chatArr" :nodeInfo="nodeInfo" :key="nodeInfo.id" :isShowItems="true" />
+	<div class="chat-container">
+		<transition name="slide-fade">
+			<el-card class="box-card" v-show="show">
+				<template #header>
+					<div class="card-header">
+						<div>
+							<el-icon>
+								<chat-round />
+							</el-icon>
+							<span class="chat-title">TALK TO US</span>
+						</div>
+
+						<div>
+							<span v-if="currUser">Welcome {{ currUser }}</span>
+						</div>
+					</div>
+				</template>
+				<chat-form v-if="!isLogin" />
+				<div v-else>
+					<ChatBlock
+						v-for="nodeInfo in chatArr"
+						:nodeInfo="nodeInfo"
+						:key="nodeInfo.id"
+						:isShowItems="true"
+					/>
+				</div>
+				<loading-chat v-if="chatLoading" />
+			</el-card>
+		</transition>
+		<div class="chat-circle" @click="show = !show">
+			<img src="@/assets/images/chat-icon.png" alt="" />
 		</div>
-	</el-card>
+	</div>
 </template>
 
 <script>
@@ -20,30 +39,37 @@
 	import ChatBlock from './ChatBlock.vue';
 	// import ChatForm from "./ChatForm.vue";
 	import { mapGetters, useStore } from 'vuex';
-	import { computed } from '@vue/reactivity';
+	import { computed, ref } from '@vue/reactivity';
 	import ChatForm from './ChatForm.vue';
+	import LoadingChat from './LoadingChat.vue';
 
 	export default {
-		components: { ChatBlock, ChatRound, ChatForm },
+		components: { ChatBlock, ChatRound, ChatForm, LoadingChat },
 		setup() {
 			const store = useStore();
 
+			const show = ref(false);
+
 			const isLogin = computed(() => store.getters['chat/isLogin']);
 
-			const chatArr = computed(() => store.getters['chat/chatArr']);
+			// const chatArr = computed(() => store.getters['chat/chatArr']);
+
+			const currUser = computed(() => store.getters['chat/currUser']);
+
+			const chatLoading = computed(() => store.getters['chat/chatLoading']);
 
 			const getNewNode = (payload) => store.dispatch('chat/getNewNode', payload);
 
 			return {
 				isLogin,
-				chatArr,
+				// chatArr,
+				chatLoading,
+				currUser,
+				show,
 				getNewNode,
 			};
 		},
 
-		created() {
-			// this.getNewNode();
-		},
 		computed: {
 			...mapGetters({
 				chatArr: 'chat/chatArr',
@@ -55,20 +81,37 @@
 <style>
 	.box-card {
 		position: absolute;
-		bottom: 0;
-		right: 20px;
+		bottom: 5px;
+		right: 80px;
 		width: 400px;
 		height: 90%;
+	}
+
+	.chat-circle {
+		position: absolute;
+		bottom: 35px;
+		right: 5px;
+
+		width: 55px;
+		height: 55px;
+	}
+
+	.chat-circle img {
+		width: 100%;
+		cursor: pointer;
 	}
 
 	.el-card__header {
 		background-color: #1890ff;
 		color: #fff;
+		padding: 0;
 	}
 
 	.card-header {
 		display: flex;
 		align-items: center;
+		justify-content: space-between;
+		padding: 10px;
 	}
 
 	.el-card__body {
@@ -92,5 +135,19 @@
 	.el-card__body::-webkit-scrollbar-thumb {
 		background-color: #bae7ff;
 		border-radius: 10px;
+	}
+</style>
+
+<style scoped>
+	.slide-fade-enter-active {
+		transition: all 0.3s ease;
+	}
+	.slide-fade-leave-active {
+		transition: all 0.3s cubic-bezier(1, 0.5, 0.8, 1);
+	}
+	.slide-fade-enter-from, .slide-fade-leave-to
+/* .slide-fade-leave-active below version 2.1.8 */ {
+		transform: translateX(10px);
+		opacity: 0;
 	}
 </style>

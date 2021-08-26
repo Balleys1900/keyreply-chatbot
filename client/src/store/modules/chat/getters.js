@@ -11,6 +11,10 @@ export default {
 		return state.masterLoading;
 	},
 
+	chatLoading(state) {
+		return state.chatLoading;
+	},
+
 	chatArr(state) {
 		return state.chatArr;
 	},

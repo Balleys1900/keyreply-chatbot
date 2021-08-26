@@ -26,8 +26,11 @@ export default {
 
 	async register({ commit, dispatch }, payload) {
 		try {
+			commit('SET_LOADING', true);
 			const res = await request.post('v1/login', payload);
 			if (res.status === 200) {
+				commit('SET_LOADING', false);
+
 				localStorage.setItem('zc', res.data);
 
 				commit('SET_LOGIN', { isLogin: true, currUser: payload.username });
@@ -40,6 +43,8 @@ export default {
 				});
 			}
 		} catch (error) {
+			commit('SET_LOADING', false);
+
 			ElMessage({
 				message: error.message,
 				type: 'error',
@@ -49,11 +54,14 @@ export default {
 
 	async getNewNode({ commit }, payload) {
 		try {
+			commit('SET_CHAT_LOADING', true);
 			const localToken = localStorage.getItem('zc');
 
 			const res = await getNode(payload, { headers: { Authorization: 'Bearer ' + localToken } });
 
 			if (res.status === 200) {
+				commit('SET_CHAT_LOADING', false);
+
 				const {
 					data: { data },
 				} = res;
@@ -63,6 +71,7 @@ export default {
 				commit('PUSH_CHAT_ARR', { ...data, isBotReply: true, isShowItems });
 			}
 		} catch (error) {
+			commit('SET_CHAT_LOADING', false);
 			console.log(error);
 		}
 	},

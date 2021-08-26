@@ -14,6 +14,7 @@
 		components: { MasterLayout },
 		setup() {
 			const store = useStore();
+
 			return {
 				// Actions
 				checkLogin: () => store.dispatch('chat/checkLogin'),
@@ -38,6 +39,7 @@
 
 	#app2 {
 		height: 100vh;
-		font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
+		font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+			'Open Sans', 'Helvetica Neue', sans-serif;
 	}
 </style>
