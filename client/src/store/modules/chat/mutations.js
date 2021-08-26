@@ -11,4 +11,8 @@ export default {
 	SET_LOADING(state, payload) {
 		state.masterLoading = payload;
 	},
+
+	SET_CHAT_LOADING(state, payload) {
+		state.chatLoading = payload;
+	},
 };

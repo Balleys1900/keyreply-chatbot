@@ -57,9 +57,12 @@
 				handleGetNextNode,
 			};
 		},
+
 		mounted() {
-			const chatElement = document.querySelector('.chat-block:last-child');
-			chatElement.scrollIntoView({ behavior: 'smooth' });
+			console.log('runnn');
+			const lastChatItem = document.querySelector('.chat-block:last-of-type');
+			console.log(lastChatItem);
+			lastChatItem?.scrollIntoView({ behavior: 'smooth' });
 		},
 	};
 </script>
