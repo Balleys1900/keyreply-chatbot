@@ -1,111 +1,110 @@
-import { ElMessage } from "element-plus";
-import { getNode, checkLogin, getChatLog, storeChatLog } from "@/api/chat";
-import request from "@/utils/request";
-import { LOCAL_TOKEN } from "@/constants/token";
+import { ElMessage } from 'element-plus';
+import { getNode, checkLogin, getChatLog, storeChatLog } from '@/api/chat';
+import request from '@/utils/request';
+import { LOCAL_TOKEN } from '@/constants/token';
 
 export default {
-  async checkLogin({ commit, dispatch }) {
-    commit("SET_LOADING", true);
-    if (!LOCAL_TOKEN) {
-      commit("SET_LOGIN", { isLogin: false });
-      commit("SET_LOADING", false);
-    } else {
-      try {
-        const { data } = await checkLogin({
-          headers: { Authorization: "Bearer " + LOCAL_TOKEN },
-        });
+	async checkLogin({ commit, dispatch }) {
+		commit('SET_LOADING', true);
+		if (!LOCAL_TOKEN) {
+			commit('SET_LOGIN', { isLogin: false });
+			commit('SET_LOADING', false);
+		} else {
+			try {
+				const { data } = await checkLogin({
+					headers: { Authorization: 'Bearer ' + LOCAL_TOKEN },
+				});
 
-        commit("SET_LOGIN", { isLogin: true, currUser: data.username });
-        await dispatch("getChatLog");
-        commit("SET_LOADING", false);
-      } catch (error) {
-        commit("SET_LOADING", false);
-        console.log(error);
-      }
-    }
-  },
+				commit('SET_LOGIN', { isLogin: true, currUser: data.username });
+				await dispatch('getChatLog');
 
-  async register({ commit, dispatch }, payload) {
-    try {
-      commit("SET_LOADING", true);
-      const res = await request.post("v1/login", payload);
-      if (res.status === 200) {
-        commit("SET_LOADING", false);
+				commit('SET_LOADING', false);
+			} catch (error) {
+				commit('SET_LOADING', false);
+				console.log(error);
+			}
+		}
+	},
 
-        localStorage.setItem("zc", res.data);
+	async register({ commit, dispatch }, payload) {
+		try {
+			commit('SET_LOADING', true);
+			const res = await request.post('v1/login', payload);
+			if (res.status === 200) {
+				commit('SET_LOADING', false);
 
-        commit("SET_LOGIN", { isLogin: true, currUser: payload.username });
+				localStorage.setItem('zc', res.data);
 
-        dispatch("getNewNode");
+				commit('SET_LOGIN', { isLogin: true, currUser: payload.username });
 
-        ElMessage({
-          message: "Login successfully",
-          type: "success",
-        });
-      }
-    } catch (error) {
-      commit("SET_LOADING", false);
+				dispatch('getNewNode');
 
-      ElMessage({
-        message: error.message,
-        type: "error",
-      });
-    }
-  },
+				ElMessage({
+					message: 'Login successfully',
+					type: 'success',
+				});
+			}
+		} catch (error) {
+			commit('SET_LOADING', false);
 
-  async getNewNode({ commit, getters }, payload) {
-    try {
-      commit("SET_CHAT_LOADING", true);
-      const localToken = localStorage.getItem("zc");
+			ElMessage({
+				message: error.message,
+				type: 'error',
+			});
+		}
+	},
 
-      const res = await getNode(payload, {
-        headers: { Authorization: "Bearer " + localToken },
-      });
+	async getNewNode({ commit, getters }, payload) {
+		try {
+			commit('SET_CHAT_LOADING', true);
+			const localToken = localStorage.getItem('zc');
 
-      if (res.status === 200) {
-        commit("SET_CHAT_LOADING", false);
+			const res = await getNode(payload, {
+				headers: { Authorization: 'Bearer ' + localToken },
+			});
 
-        const {
-          data: { data },
-        } = res;
+			if (res.status === 200) {
+				commit('SET_CHAT_LOADING', false);
 
-        const isShowItems = data.id === "list_items" ? true : false;
+				const {
+					data: { data },
+				} = res;
 
-        commit("PUSH_CHAT_ARR", { ...data, isBotReply: true, isShowItems });
+				const isShowItems = data.id === 'list_items' ? true : false;
 
-        const newChatArr = getters.chatArr;
+				commit('PUSH_CHAT_ARR', { ...data, isBotReply: true, isShowItems });
 
-        storeChatLog(newChatArr, {
-          headers: { Authorization: "Bearer " + localToken },
-        })
-          .then((res) => {
-            console.log(res);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      }
-    } catch (error) {
-      commit("SET_CHAT_LOADING", false);
-    }
-  },
+				const newChatArr = getters.chatArr;
 
-  async getChatLog({ commit }) {
-    try {
-      commit("SET_CHAT_LOADING", true);
-      const localToken = localStorage.getItem("zc");
-      const res = await getChatLog({
-        headers: { Authorization: "Bearer " + localToken },
-      });
+				const axiosConfig = {
+					headers: { Authorization: 'Bearer ' + localToken },
+				};
 
-      if (res.status === 200) {
-        const { data } = res;
+				storeChatLog({ chatArr: newChatArr }, axiosConfig);
+			}
+		} catch (error) {
+			commit('SET_CHAT_LOADING', false);
+		}
+	},
 
-        commit("REPLACE_CHAT_ARR", data);
-        commit("SET_CHAT_LOADING", false);
-      }
-    } catch (error) {
-      commit("SET_CHAT_LOADING", false);
-    }
-  },
+	async getChatLog({ commit }) {
+		try {
+			commit('SET_CHAT_LOADING', true);
+			const localToken = localStorage.getItem('zc');
+			const res = await getChatLog({
+				headers: { Authorization: 'Bearer ' + localToken },
+			});
+
+			if (res.status === 200) {
+				const { data } = res;
+
+				console.log(res);
+
+				commit('REPLACE_CHAT_ARR', data);
+				commit('SET_CHAT_LOADING', false);
+			}
+		} catch (error) {
+			commit('SET_CHAT_LOADING', false);
+		}
+	},
 };
