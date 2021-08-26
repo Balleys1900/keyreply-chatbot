@@ -89,7 +89,7 @@
 <style>
 	.product-modal {
 		max-width: 100vw;
-		width: 90% !important;
+		width: 70% !important;
 		text-align: left;
 	}
 	.product-section {
