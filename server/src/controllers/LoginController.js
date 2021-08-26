@@ -1,6 +1,5 @@
-const constant = require("../config");
-
 const jwt = require("jsonwebtoken");
+
 class LoginController {
   login(req, res) {
     const username = req.body.username;
@@ -11,9 +10,9 @@ class LoginController {
         message: "Bad Request",
       });
     }
-    const secretKey = constant.ACCESS_TOKEN_SECRET;
+    const secretKey = process.env.ACCESS_TOKEN_SECRET;
     const tokens = jwt.sign({ username }, secretKey, {
-      expiresIn: "24h",
+      expiresIn: process.env.ACCESS_TOKEN_LIFE,
     });
     return res.status(200).json(tokens);
   }
