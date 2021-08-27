@@ -116,6 +116,173 @@ var spec = {
         security: [],
       },
     },
+    "/chatbot/history": {
+      put: {
+        tags: ["user"],
+        summary: "navigateNode",
+        description: "",
+        operationId: "getNextNode",
+        consumes: ["application/json"],
+        produces: ["application/json"],
+        parameters: [
+          {
+            in: "body",
+            name: "currentNode",
+            type: "object",
+            default: {
+              chatArr: [
+                {
+                  buttons: [
+                    {
+                      data: "list_items",
+                      event: "goto",
+                      text: "Xem danh sách sản phẩm",
+                    },
+                    {
+                      data: "conversation_end",
+                      event: "goto",
+                      text: "Kết thúc mua sắm",
+                    },
+                  ],
+                  id: "conversation_welcome",
+                  isBotReply: true,
+                  isShowItems: false,
+                  text: "Chào mừng bạn đến với cửa hàng ABC",
+                },
+                {
+                  isBotReply: false,
+                  isShowItems: false,
+                  text: "Xem danh sách sản phẩm",
+                },
+                {
+                  buttons: [
+                    {
+                      data: {
+                        key: "item_select",
+                        next: {
+                          data: "show_item:1",
+                          event: "goto",
+                        },
+                        value: "1",
+                      },
+                      event: "capture",
+                      text: "Bàn",
+                      thumb:
+                        "https://www.ikea.com/cz/en/images/products/ekedalen-extendable-table-dark-brown__0736963_pe740827_s5.jpg",
+                    },
+                    {
+                      data: {
+                        key: "item_select",
+                        next: {
+                          data: "show_item:2",
+                          event: "goto",
+                        },
+                        value: "2",
+                      },
+                      event: "capture",
+                      text: "Ghế",
+                      thumb:
+                        "https://www.ikea.com/mx/en/images/products/stefan-chair-brown-black__0727320_pe735593_s5.jpg?f=s",
+                    },
+                    {
+                      data: {
+                        key: "item_select",
+                        next: {
+                          data: "show_item:3",
+                          event: "goto",
+                        },
+                        value: "3",
+                      },
+                      event: "capture",
+                      text: "Nệm",
+                      thumb:
+                        "https://www.ikea.com/mx/en/images/products/malm-bed-frame-high-black-brown-luroey__0638608_pe699032_s5.jpg",
+                    },
+                  ],
+                  id: "list_items",
+                  isBotReply: true,
+                  isShowItems: true,
+                  text: "Danh sách sản phẩm",
+                },
+                {
+                  text: "Xem danh sách sản phẩm",
+                },
+                {
+                  buttons: [
+                    {
+                      data: {
+                        key: "item_select",
+                        next: {
+                          data: "show_item:1",
+                          event: "goto",
+                        },
+                        value: "1",
+                      },
+                      event: "capture",
+                      text: "Bàn",
+                      thumb:
+                        "https://www.ikea.com/cz/en/images/products/ekedalen-extendable-table-dark-brown__0736963_pe740827_s5.jpg",
+                    },
+                    {
+                      data: {
+                        key: "item_select",
+                        next: {
+                          data: "show_item:2",
+                          event: "goto",
+                        },
+                        value: "2",
+                      },
+                      event: "capture",
+                      text: "Ghế",
+                      thumb:
+                        "https://www.ikea.com/mx/en/images/products/stefan-chair-brown-black__0727320_pe735593_s5.jpg?f=s",
+                    },
+                    {
+                      data: {
+                        key: "item_select",
+                        next: {
+                          data: "show_item:3",
+                          event: "goto",
+                        },
+                        value: "3",
+                      },
+                      event: "capture",
+                      text: "Nệm",
+                      thumb:
+                        "https://www.ikea.com/mx/en/images/products/malm-bed-frame-high-black-brown-luroey__0638608_pe699032_s5.jpg",
+                    },
+                  ],
+                  id: "list_items",
+                  isBotReply: true,
+                  isShowItems: true,
+                  text: "Danh sách sản phẩm",
+                },
+              ],
+            },
+            description: "information of next",
+          },
+          {
+            name: "Authorization",
+            in: "header",
+            description: "token to be passed as format: Bearer + Token",
+            type: "string",
+          },
+        ],
+        responses: {
+          200: {
+            description: "return information next node",
+            schema: {
+              $ref: "#/definitions/updateChatLog",
+            },
+          },
+          503: {
+            description: "Server Error",
+            schema: { $ref: "#/definitions/serverError" },
+          },
+        },
+        security: [],
+      },
+    },
   },
   securityDefinitions: {
     api_key: {
@@ -195,6 +362,32 @@ var spec = {
         message: {
           type: "string",
           default: "Unauthorized",
+        },
+      },
+    },
+    serverError: {
+      type: "object",
+      properties: {
+        status: {
+          type: "string",
+          default: "failed",
+        },
+        message: {
+          type: "string",
+          default: "Internal server error",
+        },
+      },
+    },
+    updateChatLog: {
+      type: "object",
+      properties: {
+        status: {
+          type: "string",
+          default: "success",
+        },
+        message: {
+          type: "string",
+          default: "Update Success",
         },
       },
     },
