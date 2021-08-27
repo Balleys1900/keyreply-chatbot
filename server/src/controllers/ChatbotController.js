@@ -1,5 +1,8 @@
-const chatbot = require('../data/chatbot.json');
-const Element = require('../models/element');
+
+const chatbot = require("../data/chatbot.json");
+const User = require('../models/user');
+
+
 class ChatbotController {
 	navigateNode(req, res) {
 		const currentNode = req.body.currentNode;
@@ -14,33 +17,23 @@ class ChatbotController {
 		return res.status(200).json({ data: contentNext });
 	}
 
-	async storeHistory(req, res) {
-		const access_token = req.headers.authorization.split(' ')[1];
-		const filter = { tokens: access_token };
-		console.log(req.body.chatArr);
-		const update = { $set: { chatArr: req.body.chatArr, tokens: access_token } };
-		Element.findOne(filter).then((data) => {
-			if (data) {
-				Element.updateOne(filter, update, { upsert: true })
-					.then(() => {
-						return res.status(200).json({ msg: 'update success' });
-					})
-					.catch((err) => {
-						return res.status(503).json({ msg: 'Internal server error' });
-					});
-			} else {
-				Element.create({
-					chatArr: req.body.chatArr,
-					tokens: req.headers.authorization.split(' ')[1],
-				});
-				return res.status(200).json({ msg: 'success' });
-			}
-		});
-	}
+  async storeHistory(req,res){
+    const access_token = req.headers.authorization.split(' ')[1];
+    const filter = { access_token: access_token }
+    const update = { $set: { chatArr: req.body.chatArr }}
+            User.updateOne(filter, update, { upsert: true })
+                .then(()=>{
+                  return res.status(200).json({msg: "update success"});
+                })
+                .catch(err=>{
+                  return res.status(503).json({msg: "Internal server error"});
+                })
+
+  }
 
 	getHistory(req, res) {
 		const access_token = req.headers.authorization.split(' ')[1];
-		Element.findOne({ tokens: access_token })
+		User.findOne({ tokens: access_token })
 			.then((data) => {
 				console.log(data);
 				return res.status(200).send(data.chatArr);
