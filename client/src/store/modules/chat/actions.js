@@ -14,14 +14,13 @@ export default {
 				const { data } = await checkLogin({
 					headers: { Authorization: 'Bearer ' + LOCAL_TOKEN },
 				});
-
 				commit('SET_LOGIN', { isLogin: true, currUser: data.username });
-				await dispatch('getChatLog');
 
+				await dispatch('getChatLog');
 				commit('SET_LOADING', false);
 			} catch (error) {
 				commit('SET_LOADING', false);
-				console.log(error);
+				localStorage.removeItem('zc');
 			}
 		}
 	},
@@ -29,16 +28,15 @@ export default {
 	async register({ commit, dispatch }, payload) {
 		try {
 			commit('SET_LOADING', true);
+
 			const res = await request.post('v1/login', payload);
+
 			if (res.status === 200) {
 				commit('SET_LOADING', false);
 
 				localStorage.setItem('zc', res.data);
-
 				commit('SET_LOGIN', { isLogin: true, currUser: payload.username });
-
 				dispatch('getNewNode');
-
 				ElMessage({
 					message: 'Login successfully',
 					type: 'success',
@@ -66,20 +64,15 @@ export default {
 			if (res.status === 200) {
 				commit('SET_CHAT_LOADING', false);
 
-				const {
-					data: { data },
-				} = res;
+				const { data: { data } } = res;
 
 				const isShowItems = data.id === 'list_items' ? true : false;
-
 				commit('PUSH_CHAT_ARR', { ...data, isBotReply: true, isShowItems });
 
 				const newChatArr = getters.chatArr;
-
 				const axiosConfig = {
 					headers: { Authorization: 'Bearer ' + localToken },
 				};
-
 				storeChatLog({ chatArr: newChatArr }, axiosConfig);
 			}
 		} catch (error) {
