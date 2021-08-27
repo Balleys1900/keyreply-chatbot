@@ -1,5 +1,6 @@
 const chatbot = require("../data/chatbot.json");
-const Element = require("../models/history");
+const User = require('../models/user');
+
 class ChatbotController {
 
   navigateNode(req, res) {
@@ -22,26 +23,16 @@ class ChatbotController {
 
   async storeHistory(req,res){
     const access_token = req.headers.authorization.split(' ')[1];
-    const filter = { tokens: access_token }
-    const update = { $set: { chatArr: req.body.chatArr,tokens: access_token }}
-    Element.findOne(filter)
-        .then((data) =>{
-          if(data){
-            Element.updateOne(filter, update, { upsert: true })
+    const filter = { access_token: access_token }
+    const update = { $set: { chatArr: req.body.chatArr }}
+            User.updateOne(filter, update, { upsert: true })
                 .then(()=>{
                   return res.status(200).json({msg: "update success"});
                 })
                 .catch(err=>{
                   return res.status(503).json({msg: "Internal server error"});
                 })
-          }else {
-            Element.create({
-              chatArr: req.body.chatArr,
-              tokens: req.headers.authorization.split(' ')[1]
-            })
-            return res.status(200).json({msg: "create success"});
-          }
-        })
+
   }
 
   getHistory(req,res){

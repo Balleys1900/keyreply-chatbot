@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const User = require('../models/user');
 
 class LoginController {
   login(req, res) {
@@ -11,10 +12,20 @@ class LoginController {
       });
     }
     const secretKey = process.env.ACCESS_TOKEN_SECRET;
-    const tokens = jwt.sign({ username }, secretKey, {
+    const token = jwt.sign({ username }, secretKey, {
       expiresIn: process.env.ACCESS_TOKEN_LIFE,
     });
-    return res.status(200).json(tokens);
+    User.create({
+      username: username,
+      access_token:token,
+      chatArr: [],
+    })
+        .then(()=>{
+          return res.status(200).json(token);
+    })
+        .catch(err=> {
+          return res.status(503).json({msg: "Can't create user"});
+        })
   }
 }
 
