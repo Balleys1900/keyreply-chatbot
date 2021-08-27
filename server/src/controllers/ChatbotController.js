@@ -1,5 +1,5 @@
 const chatbot = require("../data/chatbot.json");
-const Element = require("../models/elment");
+const Element = require("../models/history");
 class ChatbotController {
 
   navigateNode(req, res) {
@@ -39,7 +39,7 @@ class ChatbotController {
               chatArr: req.body.chatArr,
               tokens: req.headers.authorization.split(' ')[1]
             })
-            return res.status(200).json({msg: "success"});
+            return res.status(200).json({msg: "create success"});
           }
         })
   }
