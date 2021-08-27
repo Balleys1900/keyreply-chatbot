@@ -1,8 +1,9 @@
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
+
 
 const verifyToken = (req, res, next) => {
-  const authHeader = req.header('Authorization');
-  const token = authHeader && authHeader.split(' ')[1];
+  const authHeader = req.header("Authorization");
+  const token = authHeader && authHeader.split(" ")[1];
   const secretKey = process.env.ACCESS_TOKEN_SECRET;
   if (!token) return res.sendStatus(401);
 
@@ -15,8 +16,8 @@ const verifyToken = (req, res, next) => {
 };
 
 const checkTokenToLogin = (req, res, next) => {
-  const authHeader = req.header('Authorization');
-  const token = authHeader && authHeader.split(' ')[1];
+  const authHeader = req.header("Authorization");
+  const token = authHeader && authHeader.split(" ")[1];
   const secretKey = process.env.ACCESS_TOKEN_SECRET;
   if (!token) return next();
   try {
@@ -26,8 +27,8 @@ const checkTokenToLogin = (req, res, next) => {
     });
   } catch (error) {
     return res.status(403).json({
-      status: 'fail',
-      message: 'token expired',
+      status: "fail",
+      message: "token expired",
     });
   }
 };
