@@ -1,5 +1,5 @@
 import { ElMessage } from 'element-plus';
-import { getNode, checkLogin } from '@/api/chat';
+import { getNode, checkLogin, getChatLog, storeChatLog } from '@/api/chat';
 import request from '@/utils/request';
 import { LOCAL_TOKEN } from '@/constants/token';
 
@@ -11,11 +11,13 @@ export default {
 			commit('SET_LOADING', false);
 		} else {
 			try {
-				const { data } = await checkLogin({ headers: { Authorization: 'Bearer ' + LOCAL_TOKEN } });
+				const { data } = await checkLogin({
+					headers: { Authorization: 'Bearer ' + LOCAL_TOKEN },
+				});
 
 				commit('SET_LOGIN', { isLogin: true, currUser: data.username });
+				await dispatch('getChatLog');
 
-				await dispatch('getNewNode');
 				commit('SET_LOADING', false);
 			} catch (error) {
 				commit('SET_LOADING', false);
@@ -52,12 +54,14 @@ export default {
 		}
 	},
 
-	async getNewNode({ commit }, payload) {
+	async getNewNode({ commit, getters }, payload) {
 		try {
 			commit('SET_CHAT_LOADING', true);
 			const localToken = localStorage.getItem('zc');
 
-			const res = await getNode(payload, { headers: { Authorization: 'Bearer ' + localToken } });
+			const res = await getNode(payload, {
+				headers: { Authorization: 'Bearer ' + localToken },
+			});
 
 			if (res.status === 200) {
 				commit('SET_CHAT_LOADING', false);
@@ -69,10 +73,38 @@ export default {
 				const isShowItems = data.id === 'list_items' ? true : false;
 
 				commit('PUSH_CHAT_ARR', { ...data, isBotReply: true, isShowItems });
+
+				const newChatArr = getters.chatArr;
+
+				const axiosConfig = {
+					headers: { Authorization: 'Bearer ' + localToken },
+				};
+
+				storeChatLog({ chatArr: newChatArr }, axiosConfig);
 			}
 		} catch (error) {
 			commit('SET_CHAT_LOADING', false);
-			console.log(error);
+		}
+	},
+
+	async getChatLog({ commit }) {
+		try {
+			commit('SET_CHAT_LOADING', true);
+			const localToken = localStorage.getItem('zc');
+			const res = await getChatLog({
+				headers: { Authorization: 'Bearer ' + localToken },
+			});
+
+			if (res.status === 200) {
+				const { data } = res;
+
+				console.log(res);
+
+				commit('REPLACE_CHAT_ARR', data);
+				commit('SET_CHAT_LOADING', false);
+			}
+		} catch (error) {
+			commit('SET_CHAT_LOADING', false);
 		}
 	},
 };
