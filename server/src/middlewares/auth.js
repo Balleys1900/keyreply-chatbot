@@ -13,6 +13,7 @@ const verifyToken = (req, res, next) => {
   } catch (error) {
     return res.sendStatus(403);
   }
+  next();
 };
 
 const checkTokenToLogin = (req, res, next) => {
