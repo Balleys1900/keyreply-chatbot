@@ -1,41 +1,46 @@
 <template>
-  <div
-    class="chat-block"
-    :class="{
-      bot: nodeInfo.isBotReply,
-      user: !nodeInfo.isBotReply,
-      showItem: nodeInfo.isShowItems,
-    }"
-  >
-    <div class="chat-container">
-      <p class="chat-text">{{ nodeInfo.text }}</p>
+  <div>
+    <div
+      class="chat-block"
+      :class="{
+        bot: nodeInfo.isBotReply,
+        user: !nodeInfo.isBotReply,
+        showItem: nodeInfo.isShowItems,
+      }"
+    >
+      <div class="chat-container">
+        <p class="chat-text">{{ nodeInfo.text }}</p>
 
-      <ChatListItem v-if="nodeInfo.isShowItems" :products="nodeInfo.buttons" />
-      <div v-else>
-        <el-row v-if="nodeInfo.isBotReply">
-          <el-col :span="24" class="">
-            <el-button
-              v-for="button in nodeInfo.buttons"
-              :key="button.id"
-              type="primary"
-              class="chat-button"
-              @click="handleGetNextNode({ currentNode: { ...button } })"
-              >{{ button.text }}</el-button
-            >
-          </el-col>
-        </el-row>
+        <ChatListItem v-if="nodeInfo.isShowItems" :products="nodeInfo.buttons" />
+        <div v-else>
+          <el-row v-if="nodeInfo.isBotReply">
+            <el-col :span="24" class="">
+              <el-button
+                v-for="button in nodeInfo.buttons"
+                :key="button.id"
+                type="primary"
+                class="chat-button"
+                @click="handleGetNextNode({ currentNode: { ...button } })"
+                >{{ button.text }}</el-button
+              >
+            </el-col>
+          </el-row>
+        </div>
       </div>
     </div>
+    <ChatFormMessage />
   </div>
 </template>
 
 
 <script>
-import { useStore } from "vuex";
-import ChatListItem from "./ChatListItem.vue";
+import { useStore } from 'vuex';
+import ChatListItem from './ChatListItem.vue';
+import ChatFormMessage from './ChatFormMessage.vue';
 export default {
   components: {
     ChatListItem,
+    ChatFormMessage,
   },
   props: {
     nodeInfo: { type: Object, default: () => null, required: true },
@@ -43,12 +48,11 @@ export default {
   setup() {
     const store = useStore();
 
-    const getNextNode = (payload) => store.dispatch("chat/getNewNode", payload);
+    const getNextNode = payload => store.dispatch('chat/getNewNode', payload);
 
-    const mutateChatArr = (payload) =>
-      store.commit("chat/PUSH_CHAT_ARR", payload);
+    const mutateChatArr = payload => store.commit('chat/PUSH_CHAT_ARR', payload);
 
-    const handleGetNextNode = (payload) => {
+    const handleGetNextNode = payload => {
       const { text } = payload.currentNode;
       mutateChatArr({ text: text, isBotReply: false, isShowItems: false });
       getNextNode(payload);
@@ -61,8 +65,9 @@ export default {
   },
 
   mounted() {
-    const lastChatItem = document.querySelector(".chat-block:last-of-type");
-    lastChatItem?.scrollIntoView({ behavior: "smooth" });
+    // console.log(this.$el);
+    const lastChatItem = this.$el;
+    lastChatItem?.scrollIntoView({ behavior: 'smooth' });
   },
 };
 </script>

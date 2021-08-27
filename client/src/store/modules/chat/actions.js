@@ -1,5 +1,5 @@
 import { ElMessage } from 'element-plus';
-import { getNode, checkLogin, getChatLog, storeChatLog } from '@/api/chat';
+import { getNode, checkLogin, getChatLog, storeChatLog, getNodeText } from '@/api/chat';
 import request from '@/utils/request';
 import { LOCAL_TOKEN } from '@/constants/token';
 
@@ -97,6 +97,39 @@ export default {
 
         commit('REPLACE_CHAT_ARR', data);
         commit('SET_CHAT_LOADING', false);
+      }
+    } catch (error) {
+      commit('SET_CHAT_LOADING', false);
+    }
+  },
+
+  async getNodeInput({ commit, getters }, payload) {
+    try {
+      commit('SET_CHAT_LOADING', true);
+      const localToken = localStorage.getItem('zc');
+
+      const res = await getNodeText(payload, {
+        headers: { Authorization: 'Bearer ' + localToken }
+      });
+
+      if (res.status === 200) {
+        commit('SET_CHAT_LOADING', false);
+
+        const {
+          data: { content }
+        } = res;
+
+        console.log(content);
+
+        const isShowItems = content.id === 'list_items' ? true : false;
+
+        commit('PUSH_CHAT_ARR', { ...content, isBotReply: true, isShowItems });
+
+        const newChatArr = getters.chatArr;
+        const axiosConfig = {
+          headers: { Authorization: 'Bearer ' + localToken }
+        };
+        storeChatLog({ chatArr: newChatArr }, axiosConfig);
       }
     } catch (error) {
       commit('SET_CHAT_LOADING', false);

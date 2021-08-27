@@ -1,32 +1,35 @@
 <template>
   <div class="chat-container">
     <transition name="slide-fade">
-      <el-card class="box-card" v-show="show">
-        <template #header>
-          <div class="card-header">
-            <div>
-              <el-icon>
-                <chat-round />
-              </el-icon>
-              <span class="chat-title">TALK TO US</span>
-            </div>
+      <div class="box-card">
+        <el-card class="card-container" v-show="show">
+          <template #header>
+            <div class="card-header">
+              <div>
+                <el-icon>
+                  <chat-round />
+                </el-icon>
+                <span class="chat-title">TALK TO US</span>
+              </div>
 
-            <div>
-              <span v-if="currUser">Welcome {{ currUser }}</span>
+              <div>
+                <span v-if="currUser">Welcome {{ currUser }}</span>
+              </div>
             </div>
+          </template>
+          <ChatForm v-if="!isLogin" />
+          <div v-else>
+            <ChatBlock
+              v-for="nodeInfo in chatArr"
+              :nodeInfo="nodeInfo"
+              :key="nodeInfo.id"
+              :isShowItems="true"
+            />
           </div>
-        </template>
-        <ChatForm v-if="!isLogin" />
-        <div v-else>
-          <ChatBlock
-            v-for="nodeInfo in chatArr"
-            :nodeInfo="nodeInfo"
-            :key="nodeInfo.id"
-            :isShowItems="true"
-          />
-        </div>
-        <loading-chat v-if="chatLoading" />
-      </el-card>
+          <loading-chat v-if="chatLoading" />
+        </el-card>
+        <chat-form-message />
+      </div>
     </transition>
     <div class="chat-circle" @click="show = !show">
       <img src="@/assets/images/chat-icon.png" alt="" />
@@ -42,9 +45,10 @@ import { mapGetters, useStore } from 'vuex';
 import { computed, ref } from '@vue/reactivity';
 import ChatForm from './ChatForm.vue';
 import LoadingChat from './LoadingChat.vue';
+import ChatFormMessage from './ChatFormMessage.vue';
 
 export default {
-  components: { ChatBlock, ChatRound, ChatForm, LoadingChat },
+  components: { ChatBlock, ChatRound, ChatForm, LoadingChat, ChatFormMessage },
   setup() {
     const store = useStore();
 
@@ -83,8 +87,11 @@ export default {
   position: absolute;
   bottom: 5px;
   right: 80px;
-  width: 400px;
   height: 90%;
+}
+.card-container {
+  width: 400px;
+  height: 100%;
 }
 
 .chat-circle {
@@ -118,7 +125,12 @@ export default {
   overflow-y: auto;
   height: 90%;
 }
-
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+}
 .chat-title {
   margin-left: 10px;
 }
