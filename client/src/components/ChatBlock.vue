@@ -5,13 +5,15 @@
       :class="{
         bot: nodeInfo.isBotReply,
         user: !nodeInfo.isBotReply,
-        showItem: nodeInfo.isShowItems,
+        showList: nodeInfo.isShowItems,
+        showItem: nodeInfo.isShowItem,
       }"
     >
       <div class="chat-container">
-        <p class="chat-text">{{ nodeInfo.text }}</p>
+        <p v-if="!nodeInfo.isShowItem" class="chat-text">{{ nodeInfo.text }}</p>
 
         <ChatListItem v-if="nodeInfo.isShowItems" :products="nodeInfo.buttons" />
+        <ChatCartItem v-else-if="nodeInfo.isShowItem" :product="nodeInfo" />
         <div v-else>
           <el-row v-if="nodeInfo.isBotReply">
             <el-col :span="24" class="">
@@ -37,10 +39,12 @@
 import { useStore } from 'vuex';
 import ChatListItem from './ChatListItem.vue';
 import ChatFormMessage from './ChatFormMessage.vue';
+import ChatCartItem from './ChatCartItem.vue';
 export default {
   components: {
     ChatListItem,
     ChatFormMessage,
+    ChatCartItem,
   },
   props: {
     nodeInfo: { type: Object, default: () => null, required: true },
@@ -86,6 +90,10 @@ export default {
   text-align: center;
 }
 
+.chat-block.showList .chat-container {
+  max-width: 100%;
+  width: 100%;
+}
 .chat-block.showItem .chat-container {
   max-width: 100%;
   width: 100%;

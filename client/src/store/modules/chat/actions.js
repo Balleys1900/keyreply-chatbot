@@ -68,8 +68,10 @@ export default {
           data: { data }
         } = res;
 
+        const regex = /show_item/;
+        const isShowItem = regex.exec(data.id) ? true : false;
         const isShowItems = data.id === 'list_items' ? true : false;
-        commit('PUSH_CHAT_ARR', { ...data, isBotReply: true, isShowItems });
+        commit('PUSH_CHAT_ARR', { ...data, isBotReply: true, isShowItems, isShowItem });
 
         const newChatArr = getters.chatArr;
         const axiosConfig = {
@@ -120,10 +122,12 @@ export default {
         } = res;
 
         console.log(content);
-
+        const regex = /show_item/;
+        const isShowItem = regex.exec(content.id) ? true : false;
+        console.log(isShowItem);
         const isShowItems = content.id === 'list_items' ? true : false;
 
-        commit('PUSH_CHAT_ARR', { ...content, isBotReply: true, isShowItems });
+        commit('PUSH_CHAT_ARR', { ...content, isBotReply: true, isShowItems, isShowItem });
 
         const newChatArr = getters.chatArr;
         const axiosConfig = {
