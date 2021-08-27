@@ -16,5 +16,5 @@ app.use(cors());
 route(app);
 
 app.listen(port, () => {
-	console.log(`adsadasdads`);
+  console.log(`http://localhost:${port}}`);
 });

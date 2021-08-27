@@ -23,7 +23,7 @@ class ChatbotController {
 			.then(() => {
 				return res.status(200).json({ msg: 'update success' });
 			})
-			.catch((err) => {
+			.catch(err => {
 				return res.status(503).json({ msg: 'Internal server error' });
 			});
 	}
@@ -31,19 +31,18 @@ class ChatbotController {
 	getHistory(req, res) {
 		const access_token = req.headers.authorization.split(' ')[1];
 		User.findOne({ access_token: access_token })
-			.then((data) => {
-				console.log(data);
+			.then(data => {
 				return res.status(200).send(data.chatArr);
 			})
-			.catch((err) => {
+			.catch(err => {
 				return res.status(404).json({ msg: 'chat Arr empty' });
 			});
 	}
 
 	/**
-	 * Get command from user chat input 
-	 * and return array of chat nodes that match the command
-	*/
+	 * Get command from user chat and
+	 * return array of chat nodes that match the command
+	 */
 	commandHandler(req, res) {
 		const commandString = req.body.command.toLowerCase();
 		const nodeIdArr = [];
