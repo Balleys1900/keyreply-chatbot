@@ -35,13 +35,13 @@
 </template>
 
 <script>
-import { ChatRound } from "@element-plus/icons";
-import ChatBlock from "./ChatBlock.vue";
+import { ChatRound } from '@element-plus/icons';
+import ChatBlock from './ChatBlock.vue';
 // import ChatForm from "./ChatForm.vue";
-import { mapGetters, useStore } from "vuex";
-import { computed, ref } from "@vue/reactivity";
-import ChatForm from "./ChatForm.vue";
-import LoadingChat from "./LoadingChat.vue";
+import { mapGetters, useStore } from 'vuex';
+import { computed, ref } from '@vue/reactivity';
+import ChatForm from './ChatForm.vue';
+import LoadingChat from './LoadingChat.vue';
 
 export default {
   components: { ChatBlock, ChatRound, ChatForm, LoadingChat },
@@ -50,15 +50,15 @@ export default {
 
     const show = ref(false);
 
-    const isLogin = computed(() => store.getters["chat/isLogin"]);
+    const isLogin = computed(() => store.getters['chat/isLogin']);
 
     // const chatArr = computed(() => store.getters['chat/chatArr']);
 
-    const currUser = computed(() => store.getters["chat/currUser"]);
+    const currUser = computed(() => store.getters['chat/currUser']);
 
-    const chatLoading = computed(() => store.getters["chat/chatLoading"]);
+    const chatLoading = computed(() => store.getters['chat/chatLoading']);
 
-    const getNewNode = (payload) => store.dispatch("chat/getNewNode", payload);
+    const getNewNode = payload => store.dispatch('chat/getNewNode', payload);
 
     return {
       isLogin,
@@ -72,7 +72,7 @@ export default {
 
   computed: {
     ...mapGetters({
-      chatArr: "chat/chatArr",
+      chatArr: 'chat/chatArr',
     }),
   },
 };
