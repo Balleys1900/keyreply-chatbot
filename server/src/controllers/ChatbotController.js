@@ -1,6 +1,7 @@
 const chatbot = require('../data/chatbot.json');
 const User = require('../models/user');
 const fuzz = require('fuzzball');
+
 class ChatbotController {
   navigateNode(req, res) {
     const currentNode = req.body.currentNode;
