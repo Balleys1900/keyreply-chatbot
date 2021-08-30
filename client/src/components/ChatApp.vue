@@ -1,7 +1,7 @@
 <template>
   <div class="chat-container">
-    <transition name="slide-fade">
-      <div class="box-card">
+    <div class="box-card">
+      <transition name="slide-fade">
         <el-card class="card-container" v-show="show">
           <template #header>
             <div class="card-header">
@@ -28,9 +28,10 @@
           </div>
           <loading-chat v-if="chatLoading" />
         </el-card>
-        <chat-form-message />
-      </div>
-    </transition>
+      </transition>
+
+      <chat-form-message v-if="isLogin && show" />
+    </div>
     <div class="chat-circle" @click="show = !show">
       <img src="@/assets/images/chat-icon.png" alt="" />
     </div>
@@ -40,7 +41,6 @@
 <script>
 import { ChatRound } from '@element-plus/icons';
 import ChatBlock from './ChatBlock.vue';
-// import ChatForm from "./ChatForm.vue";
 import { mapGetters, useStore } from 'vuex';
 import { computed, ref } from '@vue/reactivity';
 import ChatForm from './ChatForm.vue';
@@ -56,8 +56,6 @@ export default {
 
     const isLogin = computed(() => store.getters['chat/isLogin']);
 
-    // const chatArr = computed(() => store.getters['chat/chatArr']);
-
     const currUser = computed(() => store.getters['chat/currUser']);
 
     const chatLoading = computed(() => store.getters['chat/chatLoading']);
@@ -66,19 +64,18 @@ export default {
 
     return {
       isLogin,
-      // chatArr,
       chatLoading,
       currUser,
       show,
-      getNewNode,
+      getNewNode
     };
   },
 
   computed: {
     ...mapGetters({
-      chatArr: 'chat/chatArr',
-    }),
-  },
+      chatArr: 'chat/chatArr'
+    })
+  }
 };
 </script>
 

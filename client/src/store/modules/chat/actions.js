@@ -6,6 +6,7 @@ import { LOCAL_TOKEN } from '@/constants/token';
 export default {
   async checkLogin({ commit, dispatch }) {
     commit('SET_LOADING', true);
+
     if (!LOCAL_TOKEN) {
       commit('SET_LOGIN', { isLogin: false });
       commit('SET_LOADING', false);

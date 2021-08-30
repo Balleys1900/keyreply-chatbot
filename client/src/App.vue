@@ -5,28 +5,26 @@
 </template>
 
 <script>
-import { computed } from "@vue/reactivity";
-import { useStore } from "vuex";
-import MasterLayout from "./layouts/MasterLayout.vue";
+import { computed } from '@vue/reactivity';
+import { useStore } from 'vuex';
+import MasterLayout from './layouts/MasterLayout.vue';
 
 // import { storeChatLog } from "@/api/chat";
 
 export default {
-  name: "App",
+  name: 'App',
   components: { MasterLayout },
   setup() {
     const store = useStore();
 
     return {
       // Actions
-      checkLogin: () => store.dispatch("chat/checkLogin"),
+      checkLogin: () => store.dispatch('chat/checkLogin'),
       // Getters
-      isFullscreenLoading: computed(
-        () => store.getters["chat/isFullscreenLoading"]
-      ),
+      isFullscreenLoading: computed(() => store.getters['chat/isFullscreenLoading']),
 
       // Mutations
-      setLoading: (payload) => store.commit("chat/SET_LOADING", payload),
+      setLoading: payload => store.commit('chat/SET_LOADING', payload),
     };
   },
   created() {
@@ -44,7 +42,7 @@ export default {
 
 #app2 {
   height: 100vh;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+    'Open Sans', 'Helvetica Neue', sans-serif;
 }
 </style>
