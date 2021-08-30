@@ -16,8 +16,8 @@ class LoginController {
       expiresIn: process.env.ACCESS_TOKEN_LIFE,
     });
     User.create({
-      username: username,
-      access_token: token,
+      username: req.body.username,
+      access_token:token,
       chatArr: [],
     })
       .then(() => {
