@@ -12,7 +12,7 @@ export function checkLogin(options) {
 // Get Chat Node
 export function getNode(data, options) {
   return request({
-    url: 'v1/chatbot',
+    url: 'v1/chatbot/navigateNode',
     method: 'POST',
     data,
     ...options

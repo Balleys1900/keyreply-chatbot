@@ -11,7 +11,6 @@
                 </el-icon>
                 <span class="chat-title">TALK TO US</span>
               </div>
-
               <div>
                 <span v-if="currUser">Welcome {{ currUser }}</span>
               </div>
@@ -23,17 +22,15 @@
               v-for="nodeInfo in chatArr"
               :nodeInfo="nodeInfo"
               :key="nodeInfo.id"
-              :isShowItems="true"
+              :isShowList="true"
             />
           </div>
           <loading-chat v-if="chatLoading" />
         </el-card>
       </transition>
-
-      <chat-form-message v-if="isLogin && show" />
-    </div>
-    <div class="chat-circle" @click="show = !show">
-      <img src="@/assets/images/chat-icon.png" alt="" />
+      <div class="chat-circle" @click="show = !show">
+        <img src="@/assets/images/chat-icon.png" alt="" />
+      </div>
     </div>
   </div>
 </template>
@@ -45,10 +42,10 @@ import { mapGetters, useStore } from 'vuex';
 import { computed, ref } from '@vue/reactivity';
 import ChatForm from './ChatForm.vue';
 import LoadingChat from './LoadingChat.vue';
-import ChatFormMessage from './ChatFormMessage.vue';
+// import ChatFormMessage from './ChatFormMessage.vue';
 
 export default {
-  components: { ChatBlock, ChatRound, ChatForm, LoadingChat, ChatFormMessage },
+  components: { ChatBlock, ChatRound, ChatForm, LoadingChat },
   setup() {
     const store = useStore();
 
@@ -67,15 +64,17 @@ export default {
       chatLoading,
       currUser,
       show,
-      getNewNode
+      getNewNode,
     };
   },
 
   computed: {
     ...mapGetters({
-      chatArr: 'chat/chatArr'
-    })
-  }
+      chatArr: 'chat/chatArr',
+    }),
+  },
+
+  
 };
 </script>
 
@@ -94,8 +93,7 @@ export default {
 .chat-circle {
   position: absolute;
   bottom: 35px;
-  right: 5px;
-
+  right: -70px;
   width: 55px;
   height: 55px;
 }

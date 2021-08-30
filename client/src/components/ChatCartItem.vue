@@ -29,9 +29,23 @@
 </template>
 
 <script>
+import { useStore } from 'vuex';
 export default {
   props: {
     product: { type: Object, required: true },
+  },
+  setup() {
+    const store = useStore();
+
+    const getNextNode = payload => store.dispatch('chat/getNewNode', payload);
+
+    const mutateChatArr = payload => store.commit('chat/PUSH_CHAT_ARR', payload);
+    const handleGetNextNode = payload => {
+      const { text } = payload.currentNode;
+      mutateChatArr({ text: text, isBotReply: false, isShowList: false });
+      getNextNode(payload);
+    };
+    return { handleGetNextNode };
   },
 };
 </script>

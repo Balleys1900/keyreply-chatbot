@@ -8,6 +8,7 @@
             v-model="command"
             name="command"
             id="command"
+            ref="commandText"
             placeholder="Type something..."
           />
           <button class="btn-submit" @click="submitForm">Gửi</button>
@@ -71,6 +72,9 @@ export default {
         this.command = '';
       }
     },
+  },
+  mounted() {
+    this.$refs.commandText.focus();
   },
 };
 </script>
