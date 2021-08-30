@@ -37,7 +37,7 @@ class ChatbotController {
 
   getHistory(req,res){
     const access_token = req.headers.authorization.split(' ')[1];
-    Element.findOne({tokens:access_token})
+    User.findOne({access_token:access_token})
         .then((data) => {
           return res.status(200).send(data.chatArr);
         })
@@ -45,6 +45,7 @@ class ChatbotController {
           return res.status(404).json({msg: 'user not found'});
         });
   }
+
 }
 
 module.exports = new ChatbotController();
