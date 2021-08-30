@@ -1,20 +1,5 @@
 {
 	"content": {
-		"conversation_start": {
-			"text": "Nhập tên người dùng",
-			"buttons": [
-				{
-					"text": "Bắt đầu chat",
-					"event": "capture",
-					"data": {
-						"key": "username",
-						"value": "abc",
-						"next": "conversation_welcome"
-					}
-				}
-			],
-			"id": "conversation_start"
-		},
 		"conversation_welcome": {
 			"text": "Chào mừng bạn đến với cửa hàng ABC",
 			"buttons":
@@ -145,7 +130,6 @@
 			"id": "show_item:3"
 		},
 
-
 		"buy_item:fail": {
 			"text": "Mua hàng thất bại",
 			"sub-text": "stock||priceless",
@@ -197,6 +181,22 @@
 			"text": "Xin chào và hẹn gặp lại quý khách",
 			"buttons": [],
 			"id": "conversation_end"
+		},
+		"not_found": {
+			"text": "Xin lỗi , chúng tôi không hiểu được yêu cầu của quý khách, vui lòng chọn để tiếp tục",
+			"buttons": [
+				{
+					"text": "Xem sản phẩm khác",
+					"event": "goto",
+					"data": "list_items"
+				},
+				{
+					"text": "Kết thúc cuộc trò chuyện",
+					"event": "goto",
+					"data": "conversation_end"
+				}
+			],
+			"id": "not_found"
 		}
 	}
 }

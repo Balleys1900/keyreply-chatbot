@@ -1,6 +1,10 @@
-const dotenv = require('dotenv');
-dotenv.config();
 const express = require('express');
+const cors = require('cors');
+const route = require('./routes');
+
+require('./config/db').connect();
+require('dotenv').config();
+
 const app = express();
 const port = process.env.PORT;
 const db = require('./config/db');
@@ -39,11 +43,11 @@ const openapiSpecification = swaggerJsDoc(options);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(openapiSpecification));
 
 
-db.connect();
 app.use(express.json());
 app.use(cors());
+
 route(app);
 
 app.listen(port, () => {
-	console.log(`Example app listening at http://localhost:${port}`);
+  console.log(`http://localhost:${port}}`);
 });

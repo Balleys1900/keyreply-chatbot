@@ -94,9 +94,6 @@ router.post("/history",chatbotController.storeHistory);
 *         description: Forbidden
 */
 router.post("/navigateNode", chatbotController.navigateNode);
-
-
-
-
+router.post('/command', chatbotController.commandHandler);
 
 module.exports = router;

@@ -1,4 +1,4 @@
-const jwt = require("jsonwebtoken");
+const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 
 class LoginController {
@@ -7,8 +7,8 @@ class LoginController {
 
     if (!username) {
       return res.status(400).json({
-        status: "fail",
-        message: "Bad Request",
+        status: 'fail',
+        message: 'Bad Request',
       });
     }
     const secretKey = process.env.ACCESS_TOKEN_SECRET;
@@ -20,12 +20,12 @@ class LoginController {
       access_token:token,
       chatArr: [],
     })
-        .then(()=>{
-          return res.status(200).json(token);
-    })
-        .catch(err=> {
-          return res.status(503).json({msg: "Can't create user"});
-        })
+      .then(() => {
+        return res.status(200).json(token);
+      })
+      .catch(err => {
+        return res.status(503).json({ msg: "Can't create user" });
+      });
   }
 }
 
