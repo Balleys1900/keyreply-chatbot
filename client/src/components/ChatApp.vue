@@ -37,7 +37,6 @@
 <script>
 import { ChatRound } from '@element-plus/icons';
 import ChatBlock from './ChatBlock.vue';
-// import ChatForm from "./ChatForm.vue";
 import { mapGetters, useStore } from 'vuex';
 import { computed, ref } from '@vue/reactivity';
 import ChatForm from './ChatForm.vue';
@@ -52,8 +51,6 @@ export default {
 
     const isLogin = computed(() => store.getters['chat/isLogin']);
 
-    // const chatArr = computed(() => store.getters['chat/chatArr']);
-
     const currUser = computed(() => store.getters['chat/currUser']);
 
     const chatLoading = computed(() => store.getters['chat/chatLoading']);
@@ -62,7 +59,6 @@ export default {
 
     return {
       isLogin,
-      // chatArr,
       chatLoading,
       currUser,
       show,

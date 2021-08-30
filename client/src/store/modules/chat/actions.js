@@ -6,13 +6,14 @@ import { LOCAL_TOKEN } from '@/constants/token';
 export default {
   async checkLogin({ commit, dispatch }) {
     commit('SET_LOADING', true);
+
     if (!LOCAL_TOKEN) {
       commit('SET_LOGIN', { isLogin: false });
       commit('SET_LOADING', false);
     } else {
       try {
         const { data } = await checkLogin({
-          headers: { Authorization: 'Bearer ' + LOCAL_TOKEN }
+          headers: { Authorization: 'Bearer ' + LOCAL_TOKEN },
         });
         commit('SET_LOGIN', { isLogin: true, currUser: data.username });
 
@@ -39,7 +40,7 @@ export default {
         dispatch('getNewNode');
         ElMessage({
           message: 'Login successfully',
-          type: 'success'
+          type: 'success',
         });
       }
     } catch (error) {
@@ -47,7 +48,7 @@ export default {
 
       ElMessage({
         message: error.message,
-        type: 'error'
+        type: 'error',
       });
     }
   },
@@ -58,14 +59,14 @@ export default {
       const localToken = localStorage.getItem('zc');
 
       const res = await getNode(payload, {
-        headers: { Authorization: 'Bearer ' + localToken }
+        headers: { Authorization: 'Bearer ' + localToken },
       });
 
       if (res.status === 200) {
         commit('SET_CHAT_LOADING', false);
 
         const {
-          data: { data }
+          data: { data },
         } = res;
 
         const isShowItems = data.id === 'list_items' ? true : false;
@@ -73,7 +74,7 @@ export default {
 
         const newChatArr = getters.chatArr;
         const axiosConfig = {
-          headers: { Authorization: 'Bearer ' + localToken }
+          headers: { Authorization: 'Bearer ' + localToken },
         };
         storeChatLog({ chatArr: newChatArr }, axiosConfig);
       }
@@ -87,7 +88,7 @@ export default {
       commit('SET_CHAT_LOADING', true);
       const localToken = localStorage.getItem('zc');
       const res = await getChatLog({
-        headers: { Authorization: 'Bearer ' + localToken }
+        headers: { Authorization: 'Bearer ' + localToken },
       });
 
       if (res.status === 200) {
@@ -101,5 +102,5 @@ export default {
     } catch (error) {
       commit('SET_CHAT_LOADING', false);
     }
-  }
+  },
 };
