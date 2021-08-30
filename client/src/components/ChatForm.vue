@@ -22,18 +22,16 @@
           <el-form-item prop="language">
             <el-select v-model="formData.language" placeholder="Select">
               <el-option
-                  v-for="item in options"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value">
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              >
               </el-option>
-             </el-select>
+            </el-select>
           </el-form-item>
         </el-col>
-        <el-button
-          @click="submitForm('myForm')"
-          type="primary"
-          style="width: 100%"
+        <el-button @click="submitForm('myForm')" type="primary" style="width: 100%"
           >Start</el-button
         >
         <el-col :span="24"> </el-col>
@@ -43,41 +41,43 @@
 </template>
 
 <script>
-import { reactive } from "@vue/reactivity";
-import { useStore } from "vuex";
+import { reactive } from '@vue/reactivity';
+import { useStore } from 'vuex';
 export default {
-  name: "chat-form",
+  name: 'chat-form',
   setup() {
     const formData = reactive({
-      username: "",
-      language: "",
+      username: '',
+      language: ''
     });
 
     const rules = {
       username: [
-        { required: true, message: "Please input your name.", trigger: "blur" },
+        { required: true, message: 'Please input your name.', trigger: 'blur' },
         {
           min: 2,
           max: 10,
-          message: "Length of 2 to 10 characters",
-          trigger: "blur",
-        },
-      ],
+          message: 'Length of 2 to 10 characters',
+          trigger: 'blur'
+        }
+      ]
     };
 
     const store = useStore();
 
     const register = () =>
-      store.dispatch("chat/register", { username: formData.username, language: formData.language });
+      store.dispatch('chat/register', { username: formData.username, language: formData.language });
 
-
-     const options = [{
+    const options = [
+      {
         value: 'vi',
         label: 'Tiếng Việt'
-      }, {
+      },
+      {
         value: 'en',
         label: 'Tiếng Anh'
-      }]
+      }
+    ];
 
     return {
       // State
@@ -86,24 +86,24 @@ export default {
       options,
       // Methods
       // Actions
-      register,
+      register
       // Getters
     };
   },
   methods: {
     submitForm(formName) {
       event.preventDefault();
-      this.$refs[formName].validate((valid) => {
+      this.$refs[formName].validate(valid => {
         if (valid) {
           console.log(this.formData);
           this.register();
         } else {
-          console.log("error submit!!");
+          console.log('error submit!!');
           return false;
         }
       });
-    },
-  },
+    }
+  }
 };
 </script>
 
