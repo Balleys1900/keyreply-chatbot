@@ -1,5 +1,5 @@
 import { ElMessage } from 'element-plus';
-import { getNode, checkLogin, getChatLog, storeChatLog } from '@/api/chat';
+import { getNode, checkLogin, getChatLog, storeChatLog, getNodeText } from '@/api/chat';
 import request from '@/utils/request';
 import { LOCAL_TOKEN } from '@/constants/token';
 
@@ -69,8 +69,10 @@ export default {
           data: { data },
         } = res;
 
+        const regex = /show_item/;
+        const isShowItem = regex.exec(data.id) ? true : false;
         const isShowItems = data.id === 'list_items' ? true : false;
-        commit('PUSH_CHAT_ARR', { ...data, isBotReply: true, isShowItems });
+        commit('PUSH_CHAT_ARR', { ...data, isBotReply: true, isShowItems, isShowItem });
 
         const newChatArr = getters.chatArr;
         const axiosConfig = {
@@ -103,4 +105,42 @@ export default {
       commit('SET_CHAT_LOADING', false);
     }
   },
+<<<<<<< HEAD
+=======
+
+  async getNodeInput({ commit, getters }, payload) {
+    try {
+      commit('SET_CHAT_LOADING', true);
+      const localToken = localStorage.getItem('zc');
+
+      const res = await getNodeText(payload, {
+        headers: { Authorization: 'Bearer ' + localToken }
+      });
+
+      if (res.status === 200) {
+        commit('SET_CHAT_LOADING', false);
+
+        const {
+          data: { content }
+        } = res;
+
+        console.log(content);
+        const regex = /show_item/;
+        const isShowItem = regex.exec(content.id) ? true : false;
+        console.log(isShowItem);
+        const isShowItems = content.id === 'list_items' ? true : false;
+
+        commit('PUSH_CHAT_ARR', { ...content, isBotReply: true, isShowItems, isShowItem });
+
+        const newChatArr = getters.chatArr;
+        const axiosConfig = {
+          headers: { Authorization: 'Bearer ' + localToken }
+        };
+        storeChatLog({ chatArr: newChatArr }, axiosConfig);
+      }
+    } catch (error) {
+      commit('SET_CHAT_LOADING', false);
+    }
+  }
+>>>>>>> 899d30ea454b996e1207202dd3f0c6e041276155
 };
