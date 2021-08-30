@@ -10,7 +10,8 @@
         },
         { "text": "Xem Danh Sách Sản Phẩm", "event": "goto", "data": "list_items" }
       ],
-      "id": "conversation_welcome"
+      "id": "conversation_welcome",
+      "regex": "[][][]"
     },
 
     "list_items": {

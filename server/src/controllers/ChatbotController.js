@@ -51,10 +51,12 @@ class ChatbotController {
     for (const property in chatbot.content) {
       if (property !== 'not_found') nodeIdArr.push(property);
     }
+
     const matchNodesRaw = fuzz.extract(commandString, nodeIdArr, { returnObjects: true });
+
     let matchNode = null;
 
-    if (matchNodesRaw[0].score > 30) {
+    if (matchNodesRaw[0].score > 90) {
       matchNode = chatbot.content[matchNodesRaw[0].choice];
     }
 
@@ -70,7 +72,6 @@ class ChatbotController {
       });
     }
   }
-
 }
 
 module.exports = new ChatbotController();

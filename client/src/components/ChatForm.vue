@@ -9,6 +9,7 @@
     >
       <el-row>
         <img src="@/assets/images/welcome.png" alt="" class="form-image" />
+
         <el-col :span="24">
           <el-form-item prop="username">
             <el-input
@@ -17,10 +18,9 @@
             ></el-input>
           </el-form-item>
         </el-col>
-        <el-button
-          @click="submitForm('myForm')"
-          type="primary"
-          style="width: 100%"
+        <!-- Selected -->
+
+        <el-button @click="submitForm('myForm')" type="primary" style="width: 100%"
           >Start</el-button
         >
         <el-col :span="24"> </el-col>
@@ -30,31 +30,30 @@
 </template>
 
 <script>
-import { reactive } from "@vue/reactivity";
-import { useStore } from "vuex";
+import { reactive } from '@vue/reactivity';
+import { useStore } from 'vuex';
 export default {
-  name: "chat-form",
+  name: 'chat-form',
   setup() {
     const formData = reactive({
-      username: "",
+      username: ''
     });
 
     const rules = {
       username: [
-        { required: true, message: "Please input your name.", trigger: "blur" },
+        { required: true, message: 'Please input your name.', trigger: 'blur' },
         {
           min: 2,
           max: 10,
-          message: "Length of 2 to 10 characters",
-          trigger: "blur",
-        },
-      ],
+          message: 'Length of 2 to 10 characters',
+          trigger: 'blur'
+        }
+      ]
     };
 
     const store = useStore();
 
-    const register = () =>
-      store.dispatch("chat/register", { username: formData.username });
+    const register = () => store.dispatch('chat/register', { username: formData.username });
 
     return {
       // State
@@ -62,23 +61,23 @@ export default {
       rules,
       // Methods
       // Actions
-      register,
+      register
       // Getters
     };
   },
   methods: {
     submitForm(formName) {
       event.preventDefault();
-      this.$refs[formName].validate((valid) => {
+      this.$refs[formName].validate(valid => {
         if (valid) {
           this.register();
         } else {
-          console.log("error submit!!");
+          console.log('error submit!!');
           return false;
         }
       });
-    },
-  },
+    }
+  }
 };
 </script>
 
