@@ -22,14 +22,15 @@
               v-for="nodeInfo in chatArr"
               :nodeInfo="nodeInfo"
               :key="nodeInfo.id"
-              :isShowItems="true"
+              :isShowList="true"
             />
           </div>
           <loading-chat v-if="chatLoading" />
         </el-card>
-    </transition>
-    <div class="chat-circle" @click="show = !show">
-      <img src="@/assets/images/chat-icon.png" alt="" />
+      </transition>
+      <div class="chat-circle" @click="show = !show">
+        <img src="@/assets/images/chat-icon.png" alt="" />
+      </div>
     </div>
   </div>
 </template>
@@ -72,6 +73,8 @@ export default {
       chatArr: 'chat/chatArr',
     }),
   },
+
+  
 };
 </script>
 
@@ -90,8 +93,7 @@ export default {
 .chat-circle {
   position: absolute;
   bottom: 35px;
-  right: 5px;
-
+  right: -70px;
   width: 55px;
   height: 55px;
 }

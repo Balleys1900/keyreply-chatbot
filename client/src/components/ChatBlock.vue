@@ -71,7 +71,7 @@ export default {
   },
 
   mounted() {
-    // console.log(this.$el);
+    console.log('mounted');
     const lastChatItem = this.$el;
     lastChatItem?.scrollIntoView({ behavior: 'smooth' });
   },

@@ -42,7 +42,7 @@ export default {
     const mutateChatArr = payload => store.commit('chat/PUSH_CHAT_ARR', payload);
     const handleGetNextNode = payload => {
       const { text } = payload.currentNode;
-      mutateChatArr({ text: text, isBotReply: false, isShowItems: false });
+      mutateChatArr({ text: text, isBotReply: false, isShowList: false });
       getNextNode(payload);
     };
     return { handleGetNextNode };
