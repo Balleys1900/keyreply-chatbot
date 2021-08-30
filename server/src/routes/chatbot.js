@@ -18,19 +18,32 @@ const chatbotController = require("../controllers/ChatbotController");
  *         chatArr : Xem danh sách sản phẩm
  */
 
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Text:
+ *       type: string
+ *       properties:
+ *         command:
+ *           type: string
+ *       example:
+ *         command: list_items
+ */
+
 
 /**
-* @swagger
-* components:
-*   schemas:
-*     Notice:
-*       type: object
-*       properties:
-*         notice:
-*           type: object
-*       example:
-*         notice: Body is a button
-*/
+ * @swagger
+ * components:
+ *   schemas:
+ *     Notice:
+ *       type: object
+ *       properties:
+ *         notice:
+ *           type: object
+ *       example:
+ *         notice: Body is a button
+ */
 
 /**
  * @swagger
@@ -75,25 +88,48 @@ router.get("/history",chatbotController.getHistory);
 router.post("/history",chatbotController.storeHistory);
 
 /**
-* @swagger
-* /api/v1/chatbot/navigateNode:
-*   post:
-*     summary: Get the navigate Node
-*     requestBody:
-*       required: false
-*       content:
-*         application/json:
-*           schema:
-*             $ref: '#/components/schemas/Notice'
-*     responses:
-*      200:
-*         description:  Success
-*      401:
-*         description: Unauthorized
-*      403:
-*         description: Forbidden
-*/
+ * @swagger
+ * /api/v1/chatbot/navigateNode:
+ *   post:
+ *     summary: Get the navigate Node
+ *     requestBody:
+ *       required: false
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Notice'
+ *     responses:
+ *      200:
+ *         description:  Success
+ *      401:
+ *         description: Unauthorized
+ *      403:
+ *         description: Forbidden
+ */
 router.post("/navigateNode", chatbotController.navigateNode);
+
+
+/**
+ * @swagger
+ * /api/v1/chatbot/command:
+ *   post:
+ *     summary: Return next Button
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Text'
+ *     responses:
+ *      200:
+ *         description: Success
+ *      401:
+ *         description: Unauthorized
+ *      403:
+ *         description: Forbidden
+ *      404:
+ *         description: The token not found
+ */
 router.post('/command', chatbotController.commandHandler);
 
 module.exports = router;

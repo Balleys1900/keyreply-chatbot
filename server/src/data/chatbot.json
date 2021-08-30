@@ -7,8 +7,7 @@
 					"text": "Kết thúc mua sắm",
 					"event": "goto",
 					"data": "conversation_end"
-				}
-			],
+				},
 			"id": "conversation_welcome"
 		},
 

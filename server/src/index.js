@@ -1,8 +1,4 @@
 const express = require('express');
-const cors = require('cors');
-const route = require('./routes');
-
-require('./config/db').connect();
 require('dotenv').config();
 
 const app = express();
@@ -13,6 +9,10 @@ const cors = require('cors');
 const swaggerUi = require('swagger-ui-express');
 const swaggerJsDoc = require('swagger-jsdoc')
 
+//connect db
+db.connect();
+
+//Swagger UI
 const options = {
 	definition: {
 		openapi: '3.0.0',
@@ -49,5 +49,5 @@ app.use(cors());
 route(app);
 
 app.listen(port, () => {
-  console.log(`http://localhost:${port}}`);
+  console.log(`http://localhost:${port}`);
 });
