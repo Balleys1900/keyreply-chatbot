@@ -1,7 +1,7 @@
 <template>
   <div class="chat-container">
-    <transition name="slide-fade">
-      <div class="box-card">
+    <div class="box-card">
+      <transition name="slide-fade">
         <el-card class="card-container" v-show="show">
           <template #header>
             <div class="card-header">
@@ -28,9 +28,10 @@
           </div>
           <loading-chat v-if="chatLoading" />
         </el-card>
-        <chat-form-message />
-      </div>
-    </transition>
+      </transition>
+
+      <chat-form-message v-if="isLogin && show" />
+    </div>
     <div class="chat-circle" @click="show = !show">
       <img src="@/assets/images/chat-icon.png" alt="" />
     </div>
@@ -66,15 +67,15 @@ export default {
       chatLoading,
       currUser,
       show,
-      getNewNode,
+      getNewNode
     };
   },
 
   computed: {
     ...mapGetters({
-      chatArr: 'chat/chatArr',
-    }),
-  },
+      chatArr: 'chat/chatArr'
+    })
+  }
 };
 </script>
 

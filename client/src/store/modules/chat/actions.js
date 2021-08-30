@@ -13,7 +13,7 @@ export default {
     } else {
       try {
         const { data } = await checkLogin({
-          headers: { Authorization: 'Bearer ' + LOCAL_TOKEN },
+          headers: { Authorization: 'Bearer ' + LOCAL_TOKEN }
         });
         commit('SET_LOGIN', { isLogin: true, currUser: data.username });
 
@@ -40,7 +40,7 @@ export default {
         dispatch('getNewNode');
         ElMessage({
           message: 'Login successfully',
-          type: 'success',
+          type: 'success'
         });
       }
     } catch (error) {
@@ -48,7 +48,7 @@ export default {
 
       ElMessage({
         message: error.message,
-        type: 'error',
+        type: 'error'
       });
     }
   },
@@ -59,14 +59,14 @@ export default {
       const localToken = localStorage.getItem('zc');
 
       const res = await getNode(payload, {
-        headers: { Authorization: 'Bearer ' + localToken },
+        headers: { Authorization: 'Bearer ' + localToken }
       });
 
       if (res.status === 200) {
         commit('SET_CHAT_LOADING', false);
 
         const {
-          data: { data },
+          data: { data }
         } = res;
 
         const regex = /show_item/;
@@ -76,7 +76,7 @@ export default {
 
         const newChatArr = getters.chatArr;
         const axiosConfig = {
-          headers: { Authorization: 'Bearer ' + localToken },
+          headers: { Authorization: 'Bearer ' + localToken }
         };
         storeChatLog({ chatArr: newChatArr }, axiosConfig);
       }
@@ -90,7 +90,7 @@ export default {
       commit('SET_CHAT_LOADING', true);
       const localToken = localStorage.getItem('zc');
       const res = await getChatLog({
-        headers: { Authorization: 'Bearer ' + localToken },
+        headers: { Authorization: 'Bearer ' + localToken }
       });
 
       if (res.status === 200) {
@@ -105,8 +105,6 @@ export default {
       commit('SET_CHAT_LOADING', false);
     }
   },
-<<<<<<< HEAD
-=======
 
   async getNodeInput({ commit, getters }, payload) {
     try {
@@ -142,5 +140,4 @@ export default {
       commit('SET_CHAT_LOADING', false);
     }
   }
->>>>>>> 899d30ea454b996e1207202dd3f0c6e041276155
 };
