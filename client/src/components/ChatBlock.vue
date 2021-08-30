@@ -5,14 +5,14 @@
       :class="{
         bot: nodeInfo.isBotReply,
         user: !nodeInfo.isBotReply,
-        showList: nodeInfo.isShowItems,
+        showList: nodeInfo.isShowList,
         showItem: nodeInfo.isShowItem,
       }"
     >
       <div class="chat-container">
         <p v-if="!nodeInfo.isShowItem" class="chat-text">{{ nodeInfo.text }}</p>
 
-        <ChatListItem v-if="nodeInfo.isShowItems" :products="nodeInfo.buttons" />
+        <ChatListItem v-if="nodeInfo.isShowList" :products="nodeInfo.buttons" />
         <ChatCartItem v-else-if="nodeInfo.isShowItem" :product="nodeInfo" />
         <div v-else>
           <el-row v-if="nodeInfo.isBotReply">
@@ -30,13 +30,14 @@
         </div>
       </div>
     </div>
-    <ChatFormMessage />
+    <ChatFormMessage v-if="isLogin" />
   </div>
 </template>
 
 
 <script>
 import { useStore } from 'vuex';
+import { computed } from '@vue/reactivity';
 import ChatListItem from './ChatListItem.vue';
 import ChatFormMessage from './ChatFormMessage.vue';
 import ChatCartItem from './ChatCartItem.vue';
@@ -55,16 +56,17 @@ export default {
     const getNextNode = payload => store.dispatch('chat/getNewNode', payload);
 
     const mutateChatArr = payload => store.commit('chat/PUSH_CHAT_ARR', payload);
-
+    const isLogin = computed(() => store.getters['chat/isLogin']);
     const handleGetNextNode = payload => {
       const { text } = payload.currentNode;
-      mutateChatArr({ text: text, isBotReply: false, isShowItems: false });
+      mutateChatArr({ text: text, isBotReply: false, isShowList: false });
       getNextNode(payload);
     };
 
     return {
       getNextNode,
       handleGetNextNode,
+      isLogin,
     };
   },
 

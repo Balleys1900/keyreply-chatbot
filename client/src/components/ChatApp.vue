@@ -11,7 +11,6 @@
                 </el-icon>
                 <span class="chat-title">TALK TO US</span>
               </div>
-
               <div>
                 <span v-if="currUser">Welcome {{ currUser }}</span>
               </div>
@@ -28,7 +27,6 @@
           </div>
           <loading-chat v-if="chatLoading" />
         </el-card>
-        <chat-form-message />
       </div>
     </transition>
     <div class="chat-circle" @click="show = !show">
@@ -45,10 +43,10 @@ import { mapGetters, useStore } from 'vuex';
 import { computed, ref } from '@vue/reactivity';
 import ChatForm from './ChatForm.vue';
 import LoadingChat from './LoadingChat.vue';
-import ChatFormMessage from './ChatFormMessage.vue';
+// import ChatFormMessage from './ChatFormMessage.vue';
 
 export default {
-  components: { ChatBlock, ChatRound, ChatForm, LoadingChat, ChatFormMessage },
+  components: { ChatBlock, ChatRound, ChatForm, LoadingChat },
   setup() {
     const store = useStore();
 
