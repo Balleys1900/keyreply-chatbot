@@ -1,7 +1,7 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const chatbotController = require("../controllers/ChatbotController");
-
+const chatbotController = require('../controllers/ChatbotController');
+const { setUserStatus } = require('../middlewares/chatbot');
 
 /**
  * @swagger
@@ -30,7 +30,6 @@ const chatbotController = require("../controllers/ChatbotController");
  *       example:
  *         command: list_items
  */
-
 
 /**
  * @swagger
@@ -62,7 +61,7 @@ const chatbotController = require("../controllers/ChatbotController");
  *       404:
  *         description: The Token not found
  */
-router.get("/history",chatbotController.getHistory);
+router.get('/history', chatbotController.getHistory);
 
 /**
  * @swagger
@@ -85,7 +84,7 @@ router.get("/history",chatbotController.getHistory);
  *      404:
  *         description: The token not found
  */
-router.post("/history",chatbotController.storeHistory);
+router.post('/history', chatbotController.storeHistory);
 
 /**
  * @swagger
@@ -106,8 +105,7 @@ router.post("/history",chatbotController.storeHistory);
  *      403:
  *         description: Forbidden
  */
-router.post("/navigateNode", chatbotController.navigateNode);
-
+router.post('/navigateNode', setUserStatus, chatbotController.navigateNode);
 
 /**
  * @swagger
@@ -131,5 +129,7 @@ router.post("/navigateNode", chatbotController.navigateNode);
  *         description: The token not found
  */
 router.post('/command', chatbotController.commandHandler);
+
+router.get('/start', chatbotController.startHandler);
 
 module.exports = router;

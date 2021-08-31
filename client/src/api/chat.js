@@ -18,6 +18,9 @@ export function getNode(data, options) {
     ...options
   });
 }
+
+export function getNodeStart(data, options) {}
+
 export function storeChatLog(data, options) {
   return request({
     url: 'v1/chatbot/history',

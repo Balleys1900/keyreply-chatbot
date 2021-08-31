@@ -1,6 +1,12 @@
-POST http://localhost:8000/api/v1/chatbot/command
+POST http://localhost:8000/test
 Content-Type: application/json
 
 {
-    "command" : "end"
+    "currentNode" : {
+        "data" : {
+            "key" : "item",
+            "value" : "3"
+        },
+        "event": "capture"
+    }
 }

@@ -37,7 +37,9 @@ export default {
 
         localStorage.setItem('zc', res.data);
         commit('SET_LOGIN', { isLogin: true, currUser: payload.username });
-        dispatch('getNewNode');
+
+        dispatch('getStartNode');
+
         ElMessage({
           message: 'Login successfully',
           type: 'success'
@@ -58,7 +60,7 @@ export default {
       commit('SET_CHAT_LOADING', true);
       const localToken = localStorage.getItem('zc');
 
-      const res = await getNode(payload, {
+      const res = await getNodeStart(payload, {
         headers: { Authorization: 'Bearer ' + localToken }
       });
 
@@ -139,5 +141,7 @@ export default {
     } catch (error) {
       commit('SET_CHAT_LOADING', false);
     }
-  }
+  },
+
+  async getStartNode() {}
 };

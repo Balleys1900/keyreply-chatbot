@@ -1,24 +1,46 @@
 const chatbot = require('../data/chatbot.json');
 const User = require('../models/user');
+const storage = require('node-sessionstorage');
 const fuzz = require('fuzzball');
 
 class ChatbotController {
+  startHandler(req, res) {
+    res.status(200).json({
+      status: true,
+      content: chatbot.content['conversation_start'],
+    });
+  }
+
   navigateNode(req, res) {
-    const currentNode = req.body.currentNode;
-    if (!currentNode) {
-      const contentNext = chatbot.content[req.user.language]['conversation_welcome'];
-      return res.status(200).json({ data: contentNext });
+    const { id } = req.user;
+    const userStatus = storage.getItem(id);
+    if (!userStatus.isNextNodeHaveCondition) {
+      res.status(200).json({
+        content: chatbot.content[userStatus.next],
+      });
+    } else {
+      let matchNode;
+      const data = chatbot.content;
+      for (const node in data) {
+        let temp = true;
+        if (data[node].id === userStatus.next) {
+          const condition = data[node].condition;
+          condition.forEach(cond => {
+            if (userStatus[cond.property] !== cond.value) {
+              temp = false; //false
+            }
+          });
+          if (temp) matchNode = data[node];
+        }
+      }
+      res.status(200).json({
+        content: matchNode,
+      });
     }
-    let nextNode = currentNode.event === 'capture' ? currentNode.data.next.data : currentNode.data;
-    let contentNext = chatbot.content[req.user.language][nextNode];
-    if (!contentNext)
-      return res.status(404).json({ status: 'failed', message: 'resource not found' });
-    return res.status(200).json({ data: contentNext });
   }
 
   async storeHistory(req, res) {
-    const access_token = req.headers.authorization.split(' ')[1];
-    const filter = { access_token: access_token };
+    const filter = { id: req.user.id };
     const update = { $set: { chatArr: req.body.chatArr } };
     User.updateOne(filter, update, { upsert: true })
       .then(() => {
@@ -30,8 +52,7 @@ class ChatbotController {
   }
 
   getHistory(req, res) {
-    const access_token = req.headers.authorization.split(' ')[1];
-    User.findOne({ access_token: access_token })
+    User.findOne({ id: req.user.id })
       .then(data => {
         return res.status(200).send(data.chatArr);
       })
@@ -47,12 +68,12 @@ class ChatbotController {
   commandHandler(req, res) {
     const commandString = req.body.command.toLowerCase();
     const nodeRegArr = [];
-    const lang = req.user.language;
+    const { language_select } = storage.getItem(req.user.id);
     let matchNode;
 
-    for (const property in chatbot.content[lang]) {
+    for (const property in chatbot.content[language_select]) {
       if (property !== 'not_found') {
-        nodeRegArr.push({ id: property, regex: chatbot.content[lang][property].regex });
+        nodeRegArr.push({ id: property, regex: chatbot.content[language_select][property].regex });
       }
     }
 
@@ -62,14 +83,14 @@ class ChatbotController {
     });
 
     if (matchItem) {
-      matchNode = chatbot.content[lang][matchItem.id];
+      matchNode = chatbot.content[language_select][matchItem.id];
     } else {
       const matchNodesRaw = fuzz.extract(commandString, nodeRegArr, {
         returnObjects: true,
         processor: choice => choice.id,
       });
       if (matchNodesRaw[0].score > 30) {
-        matchNode = chatbot.content[lang][matchNodesRaw[0].choice.id];
+        matchNode = chatbot.content[language_select][matchNodesRaw[0].choice.id];
       }
     }
 
@@ -81,7 +102,7 @@ class ChatbotController {
     } else {
       res.status(200).send({
         status: false,
-        content: chatbot.content[lang]['not_found'],
+        content: chatbot.content[language_select]['not_found'],
       });
     }
   }

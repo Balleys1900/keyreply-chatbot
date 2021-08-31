@@ -9,6 +9,7 @@
     >
       <el-row>
         <img src="@/assets/images/welcome.png" alt="" class="form-image" />
+
         <el-col :span="24">
           <el-form-item prop="username">
             <el-input
