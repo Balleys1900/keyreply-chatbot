@@ -25,6 +25,7 @@
       "id": "conversation_start",
       "regex": "^(language)$"
     },
+
     "conversation_welcome": {
       "text": "Welcome to my store ABC",
       "buttons": [
@@ -65,6 +66,7 @@
       ],
       "regex": "(xin)?cha(o*)$"
     },
+
     "list_items": {
       "id": "list_items",
       "text": "List Items",
@@ -151,7 +153,7 @@
       ],
       "regex": "san pham|danh sach"
     },
-    "show_item1": {
+    "show_item:vi": {
       "text": "Desk, a table, frame, or case with a sloping or horizontal top particularly designed to aid writing or reading",
       "thumb": "https://www.ikea.com/cz/en/images/products/ekedalen-extendable-table-dark-brown__0736963_pe740827_s5.jpg",
       "price": 999,
@@ -173,9 +175,14 @@
           "property": "language_select",
           "value": "en",
           "operator": "="
+        },
+        {
+          "property": "item_select",
+          "value": "1",
+          "operator": "="
         }
       ],
-      "id": "show_item:1",
+      "id": "show_item",
       "regex": "(^desk|1$)"
     },
     "show_item1:vi": {
@@ -211,7 +218,7 @@
           "operator": "="
         }
       ],
-      "id": "show_item:1",
+      "id": "show_item",
       "regex": "(ban|1$)"
     },
     "show_item2": {
@@ -223,7 +230,7 @@
         {
           "text": "Buy Item",
           "event": "goto",
-          "data": "buy_item:success"
+          "data": "buy_item"
         },
         {
           "text": "Show another items",
@@ -236,9 +243,14 @@
           "property": "language_select",
           "value": "en",
           "operator": "="
+        },
+        {
+          "property": "item_select",
+          "value": "2",
+          "operator": "="
         }
       ],
-      "id": "show_item:2",
+      "id": "show_item",
       "regex": "(^chair|2$)"
     },
     "show_item2:vi": {
@@ -250,11 +262,7 @@
         {
           "text": "Mua sản phẩm",
           "event": "goto",
-          "data": {
-            "key": "item_select",
-            "value": "1",
-            "next": "buy_item"
-          }
+          "data": "buy_item"
         },
         {
           "text": "Xem danh sách sản phẩm",
@@ -268,8 +276,23 @@
           "value": "vi",
           "operator": "="
         }
+      ]
+    },
+    "conversation_welcome:vi": {
+      "text": "Chào mừng bạn đến với cửa hàng ABC",
+      "buttons": [
+        {
+          "text": "Kết thúc mua sắm",
+          "event": "goto",
+          "data": "conversation_end"
+        },
+        {
+          "property": "item_select",
+          "value": "2",
+          "operator": "="
+        }
       ],
-      "id": "show_item:2",
+      "id": "show_item",
       "regex": "(ghe|2$)"
     },
     "show_item3": {
@@ -294,9 +317,14 @@
           "property": "language_select",
           "value": "en",
           "operator": "="
+        },
+        {
+          "property": "item_select",
+          "value": "3",
+          "operator": "="
         }
       ],
-      "id": "show_item:3",
+      "id": "show_item",
       "regex": "(^bed|3$)"
     },
     "show_item3:vi": {
@@ -308,7 +336,7 @@
         {
           "text": "Mua sản phẩm",
           "event": "goto",
-          "next": "buy_item"
+          "data": "buy_item"
         },
         {
           "text": "Xem danh sách sản phẩm",
@@ -321,62 +349,17 @@
           "property": "language_select",
           "value": "vi",
           "operator": "="
+        },
+        {
+          "property": "item_select",
+          "value": "item_select:id",
+          "operator": "="
         }
       ],
-      "id": "show_item:3",
+      "id": "show_item",
       "regex": "(giuong|nem|3$)"
     },
-    "buy_item:fail": {
-      "text": "Buy Failed",
-      "sub-text": "stock||priceless",
-      "buttons": [
-        {
-          "text": "Show another items",
-          "event": "goto",
-          "data": "list_items"
-        },
-        {
-          "text": "Quit Conversation",
-          "event": "goto",
-          "data": "conversation_end"
-        }
-      ],
-      "condition": [
-        {
-          "property": "language_select",
-          "value": "en",
-          "operator": "="
-        }
-      ],
-      "regex": "^fail",
-      "id": "buy_item:fail"
-    },
-    "buy_item:fail:vi": {
-      "text": "Mua hàng thất bại",
-      "sub-text": "stock||priceless",
-      "buttons": [
-        {
-          "text": "Xem sản phẩm khác",
-          "event": "goto",
-          "data": "list_items"
-        },
-        {
-          "text": "Kết thúc cuộc trò chuyện",
-          "event": "goto",
-          "data": "conversation_end"
-        }
-      ],
-      "condition": [
-        {
-          "property": "language_select",
-          "value": "vi",
-          "operator": "="
-        }
-      ],
-      "id": "buy_item:fail",
-      "regex": "that bai|fail"
-    },
-    "buy_item:success": {
+    "buy_item": {
       "text": "Order Successful",
       "buttons": [
         {
@@ -405,7 +388,7 @@
       "id": "buy_item:success",
       "regex": "^buy"
     },
-    "buy_item:success:vi": {
+    "buy_item:vi": {
       "text": "Mua hàng thành công",
       "buttons": [
         {
