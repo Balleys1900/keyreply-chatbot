@@ -130,4 +130,6 @@ router.post('/navigateNode', setUserStatus, chatbotController.navigateNode);
  */
 router.post('/command', chatbotController.commandHandler);
 
+router.get('/start', chatbotController.startHandler);
+
 module.exports = router;

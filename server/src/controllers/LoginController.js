@@ -17,7 +17,6 @@ class LoginController {
     User.create({
       username: req.body.username,
       chatArr: [],
-      language: req.body.language,
     })
       .then(user => {
         const token = jwt.sign({ username, id: user._id }, secretKey, {

@@ -275,16 +275,6 @@
           "property": "language_select",
           "value": "vi",
           "operator": "="
-        }
-      ]
-    },
-    "conversation_welcome:vi": {
-      "text": "Chào mừng bạn đến với cửa hàng ABC",
-      "buttons": [
-        {
-          "text": "Kết thúc mua sắm",
-          "event": "goto",
-          "data": "conversation_end"
         },
         {
           "property": "item_select",
@@ -352,7 +342,7 @@
         },
         {
           "property": "item_select",
-          "value": "item_select:id",
+          "value": "3",
           "operator": "="
         }
       ],

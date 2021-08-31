@@ -43,7 +43,6 @@ const options = {
   },
   apis: ['./src/routes/*.js'], // files containing annotations as above
 };
-app.post('/test', setUserStatus);
 
 const openapiSpecification = swaggerJsDoc(options);
 
