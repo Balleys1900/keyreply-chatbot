@@ -1,7 +1,6 @@
 const chatbot = require('../data/chatbot.json');
 const User = require('../models/user');
 const fuzz = require('fuzzball');
-const { regexFromString } = require('../helper/reg');
 
 class ChatbotController {
   navigateNode(req, res) {
@@ -58,7 +57,7 @@ class ChatbotController {
     }
 
     const matchItem = nodeRegArr.find(item => {
-      const pattern = regexFromString(item.regex);
+      const pattern = new RegExp(item.regex, 'g');
       return pattern.test(commandString);
     });
 

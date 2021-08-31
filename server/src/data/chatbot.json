@@ -14,7 +14,6 @@
         "id": "conversation_welcome",
 
         "regex": "(xin)?cha(o*)$"
-       
       },
 
       "list_items": {
