@@ -154,7 +154,7 @@
         ],
         "condition": [],
         "id": "buy_item:fail",
-        "regex": "/(that bai|fail|3$)/g"
+        "regex": "that bai|fail"
       },
 
       "buy_item:success": {
@@ -271,7 +271,7 @@
         "regex": "^(list|category)"
       },
       "show_item:1": {
-        "text": "Desk",
+        "text": "Desk, a table, frame, or case with a sloping or horizontal top particularly designed to aid writing or reading",
         "thumb": "https://www.ikea.com/cz/en/images/products/ekedalen-extendable-table-dark-brown__0736963_pe740827_s5.jpg",
         "price": 999,
         "sub_text": "Product detail",
@@ -293,7 +293,7 @@
           "operator": "="
         },
         "id": "show_item:1",
-        "regex": "^desk$"
+        "regex": "(^desk|1$)"
       },
       "show_item:2": {
         "text": "A chair is a piece of furniture. It is used for sitting on and it can also be used for standing on, if you can't reach something",
@@ -318,7 +318,7 @@
           "operator": "="
         },
         "id": "show_item:2",
-        "regex": "^chair$"
+        "regex": "(^chair|2$)"
       },
       "show_item:3": {
         "text": "A bed is a piece of furniture which is used as a place to sleep and relax",
@@ -343,25 +343,26 @@
           "operator": "="
         },
         "id": "show_item:3",
-        "regex": "^bed$"
+        "regex": "(^bed|3$)"
       },
 
       "buy_item:fail": {
-        "text": "Mua hàng thất bại",
+        "text": "Buy Failed",
         "sub-text": "stock||priceless",
         "buttons": [
           {
-            "text": "Xem sản phẩm khác",
+            "text": "Show another items",
             "event": "goto",
             "data": "list_items"
           },
           {
-            "text": "Kết thúc cuộc trò chuyện",
+            "text": "Quit Conversation",
             "event": "goto",
             "data": "conversation_end"
           }
         ],
         "condition": [],
+        "regex": "^fail",
         "id": "buy_item:fail"
       },
 
