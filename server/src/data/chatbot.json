@@ -12,7 +12,9 @@
           { "text": "Xem Danh Sách Sản Phẩm", "event": "goto", "data": "list_items" }
         ],
         "id": "conversation_welcome",
-        "regex": "/(xin)?cha(o*)$|hi/g"
+
+        "regex": "(xin)?cha(o*)$"
+       
       },
 
       "list_items": {
@@ -59,7 +61,7 @@
             }
           }
         ],
-        "regex": "/san pham|danh sach/g"
+        "regex": "san pham|danh sach"
       },
       "show_item:1": {
         "text": "Cái bàn làm việc cực đã",
@@ -84,7 +86,7 @@
           "operator": "="
         },
         "id": "show_item:1",
-        "regex": "/(ban|1$)/g"
+        "regex": "(ban|1$)"
       },
       "show_item:2": {
         "text": "Cái ghế ngồi siêu êm",
@@ -109,7 +111,7 @@
           "operator": "="
         },
         "id": "show_item:2",
-        "regex": "/(ghe|2$)/g"
+        "regex": "(ghe|2$)"
       },
       "show_item:3": {
         "text": "Cái nệm đỉnh của chóp",
@@ -134,7 +136,7 @@
           "operator": "="
         },
         "id": "show_item:3",
-        "regex": "/(giuong|nem|3$)/g"
+        "regex": "(giuong|nem|3$)"
       },
       "buy_item:fail": {
         "text": "Mua hàng thất bại",
@@ -183,13 +185,13 @@
           }
         ],
         "id": "buy_item:success",
-        "regex": "/mua|thanh toan/g"
+        "regex": "mua|thanh toan"
       },
       "conversation_end": {
         "text": "Xin chào và hẹn gặp lại quý khách",
         "buttons": [],
         "id": "conversation_end",
-        "regex": "/ket thuc|tam biet/g"
+        "regex": "ket thuc|tam biet"
       },
       "not_found": {
         "text": "Xin lỗi , chúng tôi không hiểu được yêu cầu của quý khách, vui lòng chọn để tiếp tục",
@@ -220,7 +222,7 @@
           { "text": "Show List items", "event": "goto", "data": "list_items" }
         ],
         "id": "conversation_welcome",
-        "regex": "/^(hi*(i)$|hello*(o)$)$/g"
+        "regex": "^(hi*(i)$|hello*(o)$)$"
       },
 
       "list_items": {
@@ -267,7 +269,7 @@
             }
           }
         ],
-        "regex": "/^(list|category)/g"
+        "regex": "^(list|category)"
       },
       "show_item:1": {
         "text": "Desk",
@@ -292,7 +294,7 @@
           "operator": "="
         },
         "id": "show_item:1",
-        "regex": "/^desk$/g"
+        "regex": "^desk$"
       },
       "show_item:2": {
         "text": "A chair is a piece of furniture. It is used for sitting on and it can also be used for standing on, if you can't reach something",
@@ -317,7 +319,7 @@
           "operator": "="
         },
         "id": "show_item:2",
-        "regex": "/^chair$/g"
+        "regex": "^chair$"
       },
       "show_item:3": {
         "text": "A bed is a piece of furniture which is used as a place to sleep and relax",
@@ -342,7 +344,7 @@
           "operator": "="
         },
         "id": "show_item:3",
-        "regex": "/^bed$/g"
+        "regex": "^bed$"
       },
 
       "buy_item:fail": {
@@ -391,14 +393,14 @@
           }
         ],
         "id": "buy_item:success",
-        "regex": "/^buy/g"
+        "regex": "^buy"
       },
 
       "conversation_end": {
         "text": "See you later",
         "buttons": [],
         "id": "conversation_end",
-        "regex": "/^(end|goodbye|stop)/g"
+        "regex": "^(end|goodbye|stop)"
       },
       "not_found": {
         "text": "Sorry , we do not understand your request, please search again or click button to continue!",
