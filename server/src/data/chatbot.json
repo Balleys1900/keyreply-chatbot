@@ -78,10 +78,7 @@
           "data": {
             "key": "item_select",
             "value": "1",
-            "next": {
-              "event": "goto",
-              "data": "show_item:1"
-            }
+            "next": "show_item"
           }
         },
         {
@@ -91,10 +88,7 @@
           "data": {
             "key": "item_select",
             "value": "2",
-            "next": {
-              "event": "goto",
-              "data": "show_item:2"
-            }
+            "next": "show_item"
           }
         },
         {
@@ -104,10 +98,7 @@
           "data": {
             "key": "item_select",
             "value": "3",
-            "next": {
-              "event": "goto",
-              "data": "show_item:3"
-            }
+            "next": "show_item"
           }
         }
       ],
@@ -128,20 +119,32 @@
         {
           "text": "Bàn",
           "thumb": "https://www.ikea.com/cz/en/images/products/ekedalen-extendable-table-dark-brown__0736963_pe740827_s5.jpg",
-          "event": "goto",
-          "data": "show_item1"
+          "event": "capture",
+          "data": {
+            "key": "item_select",
+            "value": "1",
+            "next": "show_item"
+          }
         },
         {
           "text": "Ghế",
           "thumb": "https://www.ikea.com/mx/en/images/products/stefan-chair-brown-black__0727320_pe735593_s5.jpg?f=s",
-          "event": "goto",
-          "data": "show_item2"
+          "event": "capture",
+          "data": {
+            "key": "item_select",
+            "value": "2",
+            "next": "show_item"
+          }
         },
         {
           "text": "Nệm",
           "thumb": "https://www.ikea.com/mx/en/images/products/malm-bed-frame-high-black-brown-luroey__0638608_pe699032_s5.jpg",
-          "event": "goto",
-          "data": "show_item3"
+          "event": "capture",
+          "data": {
+            "key": "item_select",
+            "value": "3",
+            "next": "show_item"
+          }
         }
       ],
       "condition": [
@@ -153,7 +156,7 @@
       ],
       "regex": "san pham|danh sach"
     },
-    "show_item:vi": {
+    "show_item1": {
       "text": "Desk, a table, frame, or case with a sloping or horizontal top particularly designed to aid writing or reading",
       "thumb": "https://www.ikea.com/cz/en/images/products/ekedalen-extendable-table-dark-brown__0736963_pe740827_s5.jpg",
       "price": 999,

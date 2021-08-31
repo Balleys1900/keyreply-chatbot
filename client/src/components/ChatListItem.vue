@@ -35,7 +35,7 @@ import { getNode } from '@/api/chat';
 export default {
   components: { ChatModal },
   props: {
-    products: { type: Array, required: true },
+    products: { type: Array, required: true }
   },
   setup() {
     let productInfo = ref({});
@@ -45,11 +45,11 @@ export default {
         const tokenLocal = localStorage.getItem('zc');
         const res = await getNode(payload, {
           headers: {
-            Authorization: `Bearer ${tokenLocal}`,
-          },
+            Authorization: `Bearer ${tokenLocal}`
+          }
         });
         productInfo.value = res.data.content;
-        console.log(productInfo.value);
+        console.log(res);
       } catch (error) {
         console.log(error);
       }
@@ -69,9 +69,9 @@ export default {
       dialogVisible,
       productInfo,
       handleCloseModal,
-      handleClickProductItem,
+      handleClickProductItem
     };
-  },
+  }
 
   // data() {
   //   return {

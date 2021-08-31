@@ -12,8 +12,9 @@ class ChatbotController {
   }
 
   navigateNode(req, res) {
-    const { id } = req.user;
+    const id = req.user.id;
     const userStatus = storage.getItem(id);
+    console.log(userStatus);
     if (!userStatus.isNextNodeHaveCondition) {
       res.status(200).json({
         content: chatbot.content[userStatus.next],
