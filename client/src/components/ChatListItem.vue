@@ -49,7 +49,7 @@ export default {
           }
         });
         productInfo.value = res.data.content;
-        console.log(productInfo.value);
+        console.log(res);
       } catch (error) {
         console.log(error);
       }
