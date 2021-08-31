@@ -69,7 +69,7 @@ class ChatbotController {
     const commandString = req.body.command.toLowerCase();
     const nodeRegArr = [];
     const store = storage.getItem(req.user.id);
-    const language_select = store.language_select || 'vi';
+    const language_select = store?.language_select || 'vi';
 
     const prefix = language_select === 'vi' ? ':vi' : '';
 
