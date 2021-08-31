@@ -48,7 +48,7 @@ export default {
             Authorization: `Bearer ${tokenLocal}`,
           },
         });
-        productInfo.value = res.data.data;
+        productInfo.value = res.data.content;
         console.log(productInfo.value);
       } catch (error) {
         console.log(error);
