@@ -12,7 +12,7 @@
           { "text": "Xem Danh Sách Sản Phẩm", "event": "goto", "data": "list_items" }
         ],
         "id": "conversation_welcome",
-        "regex": "/(xin)?cha(o*)$/g"
+        "regex": "/(xin)?cha(o*)$|hi/g"
       },
 
       "list_items": {
@@ -152,7 +152,8 @@
           }
         ],
         "condition": [],
-        "id": "buy_item:fail"
+        "id": "buy_item:fail",
+        "regex": "/(that bai|fail|3$)/g"
       },
 
       "buy_item:success": {
@@ -207,7 +208,7 @@
         "id": "not_found"
       }
     },
-    "eng": {
+    "en": {
       "conversation_welcome": {
         "text": "Welcome to my store ABC",
         "buttons": [
