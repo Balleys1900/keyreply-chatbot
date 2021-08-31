@@ -1,5 +1,5 @@
 import { ElMessage } from 'element-plus';
-import { getNode, checkLogin, getChatLog, storeChatLog, getNodeText } from '@/api/chat';
+import { getNode, checkLogin, getChatLog, storeChatLog, getNodeText, getNodeStart } from '@/api/chat';
 import request from '@/utils/request';
 import { LOCAL_TOKEN } from '@/constants/token';
 
@@ -55,7 +55,7 @@ export default {
     }
   },
 
-  async getNewNode({ commit, getters }, payload) {
+  async getNewNode({ commit, dispatch }, payload) {
     try {
       commit('SET_CHAT_LOADING', true);
       const localToken = localStorage.getItem('zc');
@@ -68,19 +68,15 @@ export default {
         commit('SET_CHAT_LOADING', false);
 
         const {
-          data: { data }
+          data: { content }
         } = res;
 
         const regex = /show_item/;
-        const isShowItem = regex.exec(data.id) ? true : false;
-        const isShowList = data.id === 'list_items' ? true : false;
-        commit('PUSH_CHAT_ARR', { ...data, isBotReply: true, isShowList, isShowItem });
+        const isShowItem = regex.exec(content.id) ? true : false;
+        const isShowList = content.id === 'list_items' ? true : false;
+        commit('PUSH_CHAT_ARR', { ...content, isBotReply: true, isShowList, isShowItem });
+        dispatch('storeChatlog',localToken);
 
-        const newChatArr = getters.chatArr;
-        const axiosConfig = {
-          headers: { Authorization: 'Bearer ' + localToken }
-        };
-        storeChatLog({ chatArr: newChatArr }, axiosConfig);
       }
     } catch (error) {
       commit('SET_CHAT_LOADING', false);
@@ -143,5 +139,33 @@ export default {
     }
   },
 
-  async getStartNode() {}
+  async getStartNode({ commit,dispatch }) {
+    try{
+      commit('SET_CHAT_LOADING', true);
+      const localToken = localStorage.getItem('zc');
+
+      const res = await getNodeStart({
+        headers: { Authorization: 'Bearer ' + localToken }
+      });
+
+      if (res.status === 200) {
+        const {
+          data: { content }
+        } = res;
+        commit('SET_CHAT_LOADING', false);
+        commit('PUSH_CHAT_ARR', { ...content, isBotReply: true });
+        dispatch('storeChatlog',localToken);
+      }
+    }catch (error) {
+        commit('SET_CHAT_LOADING', false);
+    }
+  },
+
+  storeChatlog({getters},payload){
+    const newChatArr = getters.chatArr;
+    const axiosConfig = {
+      headers: { Authorization: 'Bearer ' + payload }
+    };
+    storeChatLog({ chatArr: newChatArr }, axiosConfig);
+  }
 };
