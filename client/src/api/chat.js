@@ -19,7 +19,7 @@ export function getNode(data, options) {
   });
 }
 
-export function getNodeStart(data, options) {}
+// export function getNodeStart(data, options) {}
 
 export function storeChatLog(data, options) {
   return request({

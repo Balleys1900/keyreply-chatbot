@@ -60,7 +60,7 @@ export default {
       commit('SET_CHAT_LOADING', true);
       const localToken = localStorage.getItem('zc');
 
-      const res = await getNodeStart(payload, {
+      const res = await getNode(payload, {
         headers: { Authorization: 'Bearer ' + localToken }
       });
 
