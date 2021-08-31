@@ -18,20 +18,6 @@
             ></el-input>
           </el-form-item>
         </el-col>
-
-        <el-col :span="24">
-          <el-form-item prop="language">
-            <el-select v-model="formData.language" placeholder="Select">
-              <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              >
-              </el-option>
-            </el-select>
-          </el-form-item>
-        </el-col>
         <el-button @click="submitForm('myForm')" type="primary" style="width: 100%"
           >Start</el-button
         >
@@ -49,7 +35,6 @@ export default {
   setup() {
     const formData = reactive({
       username: '',
-      language: ''
     });
 
     const rules = {
@@ -67,24 +52,13 @@ export default {
     const store = useStore();
 
     const register = () =>
-      store.dispatch('chat/register', { username: formData.username, language: formData.language });
+      store.dispatch('chat/register', { username: formData.username});
 
-    const options = [
-      {
-        value: 'vi',
-        label: 'Tiếng Việt'
-      },
-      {
-        value: 'en',
-        label: 'Tiếng Anh'
-      }
-    ];
 
     return {
       // State
       formData,
       rules,
-      options,
       // Methods
       // Actions
       register

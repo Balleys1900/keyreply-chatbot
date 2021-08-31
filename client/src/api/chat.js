@@ -19,7 +19,13 @@ export function getNode(data, options) {
   });
 }
 
-export function getNodeStart(data, options) {}
+export function getNodeStart(options) {
+  return request({
+    url: 'v1/chatbot/start',
+    method: 'GET',
+    ...options
+  });
+}
 
 export function storeChatLog(data, options) {
   return request({

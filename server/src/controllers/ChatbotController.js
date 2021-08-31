@@ -40,8 +40,9 @@ class ChatbotController {
   }
 
   async storeHistory(req, res) {
-    const filter = { id: req.user.id };
+    const filter = { _id: req.user.id };
     const update = { $set: { chatArr: req.body.chatArr } };
+    console.log(filter);
     User.updateOne(filter, update, { upsert: true })
       .then(() => {
         return res.status(200).json({ msg: 'update success' });
@@ -52,7 +53,7 @@ class ChatbotController {
   }
 
   getHistory(req, res) {
-    User.findOne({ id: req.user.id })
+    User.findOne({ _id: req.user.id })
       .then(data => {
         return res.status(200).send(data.chatArr);
       })
