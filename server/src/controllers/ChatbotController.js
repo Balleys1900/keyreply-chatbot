@@ -25,12 +25,17 @@ class ChatbotController {
   }
 
   navigateNode(req, res) {
-    const { username, id } = req.user;
-    const userStatus = sessionStorage.getItem('id');
+    const { id } = req.user;
+    const userStatus = sessionStorage.getItem(id);
+    if (!userStatus.isNextNodeHaveCondition) {
+      res.status(200).json({
+        content: chatbot.content[userStatus.next],
+      });
+    } else {
+    }
   }
 
   async storeHistory(req, res) {
-    const access_token = req.headers.authorization.split(' ')[1];
     const filter = { id: req.user.id };
     const update = { $set: { chatArr: req.body.chatArr } };
     User.updateOne(filter, update, { upsert: true })

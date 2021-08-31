@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const chatbotController = require('../controllers/ChatbotController');
+const { setUserStatus } = require('../middlewares/chatbot');
 
 /**
  * @swagger
@@ -104,7 +105,7 @@ router.post('/history', chatbotController.storeHistory);
  *      403:
  *         description: Forbidden
  */
-router.post('/navigateNode', chatbotController.navigateNode);
+router.post('/navigateNode', setUserStatus, chatbotController.navigateNode);
 
 /**
  * @swagger
