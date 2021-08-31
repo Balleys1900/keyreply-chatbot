@@ -14,7 +14,6 @@ class ChatbotController {
   navigateNode(req, res) {
     const id = req.user.id;
     const userStatus = storage.getItem(id);
-    console.log(userStatus);
     if (!userStatus.isNextNodeHaveCondition) {
       res.status(200).json({
         content: chatbot.content[userStatus.next],
@@ -43,7 +42,6 @@ class ChatbotController {
   async storeHistory(req, res) {
     const filter = { _id: req.user.id };
     const update = { $set: { chatArr: req.body.chatArr } };
-    console.log(filter);
     User.updateOne(filter, update, { upsert: true })
       .then(() => {
         return res.status(200).json({ msg: 'update success' });
@@ -70,12 +68,17 @@ class ChatbotController {
   commandHandler(req, res) {
     const commandString = req.body.command.toLowerCase();
     const nodeRegArr = [];
-    const { language_select } = storage.getItem(req.user.id);
+    const store = storage.getItem(req.user.id);
+    const language_select = store.language_select || 'vi';
+
+    const prefix = language_select === 'vi' ? ':vi' : '';
+
+    console.log({ prefix });
     let matchNode;
 
-    for (const property in chatbot.content[language_select]) {
-      if (property !== 'not_found') {
-        nodeRegArr.push({ id: property, regex: chatbot.content[language_select][property].regex });
+    for (const property in chatbot.content) {
+      if (!property.includes('not_found')) {
+        nodeRegArr.push({ id: property, regex: chatbot.content[property].regex });
       }
     }
 
@@ -85,14 +88,14 @@ class ChatbotController {
     });
 
     if (matchItem) {
-      matchNode = chatbot.content[language_select][matchItem.id];
+      matchNode = chatbot.content[matchItem.id];
     } else {
       const matchNodesRaw = fuzz.extract(commandString, nodeRegArr, {
         returnObjects: true,
         processor: choice => choice.id,
       });
       if (matchNodesRaw[0].score > 30) {
-        matchNode = chatbot.content[language_select][matchNodesRaw[0].choice.id];
+        matchNode = chatbot.content[matchNodesRaw[0].choice.id];
       }
     }
 
@@ -104,7 +107,7 @@ class ChatbotController {
     } else {
       res.status(200).send({
         status: false,
-        content: chatbot.content[language_select]['not_found'],
+        content: chatbot.content[`not_found${prefix}`],
       });
     }
   }
