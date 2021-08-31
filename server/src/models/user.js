@@ -3,9 +3,8 @@ const Schema = mongoose.Schema;
 
 const User = new Schema({
   username: { type: String },
-  access_token: { type: String },
   chatArr: [],
-  lang: { type: string },
+  language: { type: String },
 });
 
 module.exports = mongoose.model('User', User);

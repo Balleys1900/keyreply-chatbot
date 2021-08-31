@@ -18,8 +18,20 @@
             ></el-input>
           </el-form-item>
         </el-col>
-        <!-- Selected -->
 
+        <el-col :span="24">
+          <el-form-item prop="language">
+            <el-select v-model="formData.language" placeholder="Select">
+              <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              >
+              </el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
         <el-button @click="submitForm('myForm')" type="primary" style="width: 100%"
           >Start</el-button
         >
@@ -36,7 +48,8 @@ export default {
   name: 'chat-form',
   setup() {
     const formData = reactive({
-      username: ''
+      username: '',
+      language: ''
     });
 
     const rules = {
@@ -53,12 +66,25 @@ export default {
 
     const store = useStore();
 
-    const register = () => store.dispatch('chat/register', { username: formData.username });
+    const register = () =>
+      store.dispatch('chat/register', { username: formData.username, language: formData.language });
+
+    const options = [
+      {
+        value: 'vi',
+        label: 'Tiếng Việt'
+      },
+      {
+        value: 'en',
+        label: 'Tiếng Anh'
+      }
+    ];
 
     return {
       // State
       formData,
       rules,
+      options,
       // Methods
       // Actions
       register
@@ -70,6 +96,7 @@ export default {
       event.preventDefault();
       this.$refs[formName].validate(valid => {
         if (valid) {
+          console.log(this.formData);
           this.register();
         } else {
           console.log('error submit!!');

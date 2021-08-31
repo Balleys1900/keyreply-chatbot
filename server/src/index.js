@@ -6,10 +6,13 @@ const route = require('./routes');
 require('dotenv').config();
 
 const app = express();
+app.use(express.json());
+
 const port = process.env.PORT;
 
 const swaggerUi = require('swagger-ui-express');
 const swaggerJsDoc = require('swagger-jsdoc');
+const { setUserStatus } = require('./middlewares/chatbot');
 
 //connect db
 db.connect();
@@ -40,6 +43,7 @@ const options = {
   },
   apis: ['./src/routes/*.js'], // files containing annotations as above
 };
+app.post('/test', setUserStatus);
 
 const openapiSpecification = swaggerJsDoc(options);
 
