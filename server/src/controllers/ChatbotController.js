@@ -1,16 +1,17 @@
 const chatbot = require('../data/chatbot.json');
 const User = require('../models/user');
 const fuzz = require('fuzzball');
+const { regexFromString } = require('../helper/reg');
 
 class ChatbotController {
   navigateNode(req, res) {
     const currentNode = req.body.currentNode;
     if (!currentNode) {
-      const contentNext = chatbot.content['conversation_welcome'];
+      const contentNext = chatbot.content[req.user.language]['conversation_welcome'];
       return res.status(200).json({ data: contentNext });
     }
     let nextNode = currentNode.event === 'capture' ? currentNode.data.next.data : currentNode.data;
-    let contentNext = chatbot.content[nextNode];
+    let contentNext = chatbot.content[req.user.language][nextNode];
     if (!contentNext)
       return res.status(404).json({ status: 'failed', message: 'resource not found' });
     return res.status(200).json({ data: contentNext });
@@ -46,16 +47,31 @@ class ChatbotController {
    */
   commandHandler(req, res) {
     const commandString = req.body.command.toLowerCase();
-    const nodeIdArr = [];
+    const nodeRegArr = [];
+    const lang = req.user.language;
+    let matchNode;
 
-    for (const property in chatbot.content) {
-      if (property !== 'not_found') nodeIdArr.push(property);
+    for (const property in chatbot.content[lang]) {
+      if (property !== 'not_found') {
+        nodeRegArr.push({ id: property, regex: chatbot.content[lang][property].regex });
+      }
     }
-    const matchNodesRaw = fuzz.extract(commandString, nodeIdArr, { returnObjects: true });
-    let matchNode = null;
 
-    if (matchNodesRaw[0].score > 30) {
-      matchNode = chatbot.content[matchNodesRaw[0].choice];
+    const matchItem = nodeRegArr.find(item => {
+      const pattern = regexFromString(item.regex);
+      return pattern.test(commandString);
+    });
+
+    if (matchItem) {
+      matchNode = chatbot.content[lang][matchItem.id];
+    } else {
+      const matchNodesRaw = fuzz.extract(commandString, nodeRegArr, {
+        returnObjects: true,
+        processor: choice => choice.id,
+      });
+      if (matchNodesRaw[0].score > 30) {
+        matchNode = chatbot.content[lang][matchNodesRaw[0].choice.id];
+      }
     }
 
     if (matchNode) {
@@ -66,11 +82,10 @@ class ChatbotController {
     } else {
       res.status(200).send({
         status: false,
-        content: chatbot.content['not_found'],
+        content: chatbot.content[lang]['not_found'],
       });
     }
   }
-
 }
 
 module.exports = new ChatbotController();
