@@ -165,7 +165,7 @@
         {
           "text": "Buy Item",
           "event": "goto",
-          "data": "buy_item:success"
+          "data": "buy_item"
         },
         {
           "text": "Show another items",
@@ -197,11 +197,7 @@
         {
           "text": "Mua sản phẩm",
           "event": "goto",
-          "data": {
-            "key": "item_select",
-            "value": "1",
-            "next": "buy_item"
-          }
+          "data": "buy_item"
         },
         {
           "text": "Xem danh sách sản phẩm",
@@ -297,7 +293,7 @@
         {
           "text": "Buy Item",
           "event": "goto",
-          "data": "buy_item:success"
+          "data": "buy_item"
         },
         {
           "text": "Show another items",
@@ -378,7 +374,7 @@
           "operator": "="
         }
       ],
-      "id": "buy_item:success",
+      "id": "buy_item",
       "regex": "^buy"
     },
     "buy_item:vi": {
@@ -403,7 +399,7 @@
         }
       ],
 
-      "id": "buy_item:success",
+      "id": "buy_item",
       "regex": "mua|thanh toan"
     },
     "not_found": {
